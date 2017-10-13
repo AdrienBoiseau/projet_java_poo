@@ -1,7 +1,9 @@
 package chris.activity;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 
 public class Main {
 
@@ -102,6 +104,41 @@ public class Main {
         } else {
             System.out.println("Mon programme passe le troisième test avec succès.");
         }
+
+        //b SCHEDULE
+
+        Activity act_a = new Activity("a", 60);
+        Activity act_b = new Activity("b", 60);
+        Activity act_c = new Activity("c", 120);
+
+        GregorianCalendar date_a = new GregorianCalendar(2012, 11, 31, 9, 0, 0);
+        GregorianCalendar date_b = new GregorianCalendar(2012, 11, 31, 10, 0, 0);
+        GregorianCalendar date_c = new GregorianCalendar(2012, 11, 31, 11, 0, 0);
+
+        HashMap<Activity, GregorianCalendar> horaires = new HashMap<>();
+        horaires.put(act_a, date_a);
+        horaires.put(act_b, date_b);
+        horaires.put(act_c, date_c);
+
+        Schedule sched = new Schedule(horaires);
+
+        ArrayList<PrecedenceConstraint> cons_true = new ArrayList<>();
+
+        cons_true.add(new PrecedenceConstraint(act_a, act_b));
+        cons_true.add(new PrecedenceConstraint(act_a, act_c));
+        cons_true.add(new PrecedenceConstraint(act_b, act_c));
+
+        System.out.println(sched.satisfies(cons_true));
+
+        ArrayList<PrecedenceConstraint> cons_false = new ArrayList<>();
+
+        cons_false.add(new PrecedenceConstraint(act_a, act_b));
+        cons_false.add(new PrecedenceConstraint(act_a, act_c));
+        cons_false.add(new PrecedenceConstraint(act_c, act_b));
+
+        System.out.println(sched.satisfies(cons_false));
+
+
     }
 
 }
