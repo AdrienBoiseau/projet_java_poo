@@ -1,8 +1,12 @@
 package chris.activity;
 
+import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
 public class Main {
+
+    public static SimpleDateFormat sdf = new SimpleDateFormat("d MMM yyyy hh:mm aaa");
+
     public static void main(String[] args){
         TP3();
 
@@ -34,14 +38,18 @@ public class Main {
         print(String.valueOf(TimeSlot.overlaps(ts1, ts2)));
         print(String.valueOf(TimeSlot.overlaps(ts1, ts3)));
         print(String.valueOf(TimeSlot.overlaps(ts2, ts3)));
-        return;
     }
 
     static private void TP3() {
         // Objets
         Activity options = new Activity ("Choisir mes options", 70);
         Activity ip = new Activity ("Inscription pédagogique", 30);
-        PrecedenceConstraint contrainte = new PrecedenceConstraint (options, ip);
+        PrecedenceConstraint contrainte = new PrecedenceConstraint(options, ip);
+
+        PrecedenceConstraintWithDuration contrainte_with_duration = new PrecedenceConstraintWithDuration(options,
+                ip,
+                0,
+                120);
         GregorianCalendar date_1 = new GregorianCalendar(2012, 11, 31, 9, 0, 0);
         GregorianCalendar date_2 = new GregorianCalendar(2012, 11, 31, 10, 0, 0);
         GregorianCalendar date_3 = new GregorianCalendar(2012, 11, 31, 11, 0, 0);
@@ -70,7 +78,30 @@ public class Main {
         } else {
             System.out.println("Mon programme passe le troisième test avec succès.");
         }
-        return;
+
+        if (contrainte_with_duration.isSatisfied(date_1, date_3)) {
+            System.out.println("Mon programme ne marche pas.");
+            System.out.println("Il aurait dû trouver que la contrainte n'est pas satisfaite.");
+        } else {
+            System.out.println("Mon programme passe le premier test avec succès.");
+        }
+
+// Test avec une programmation censée ne pas satisfaire la contrainte
+        if (!contrainte_with_duration.isSatisfied(date_2, date_1)) {
+            System.out.println("Mon programme ne marche pas.");
+            System.out.println("Il aurait dû trouver que la contrainte est satisfaite.");
+        } else {
+            System.out.println("Mon programme passe le deuxième test avec succès.");
+        }
+
+// Test avec une programmation censée ne pas satisfaire la contrainte (car la première
+// activité finirait après le début de la seconde)
+        if (contrainte_with_duration.isSatisfied(date_1, date_2)) {
+            System.out.println("Mon programme ne marche pas.");
+            System.out.println("Il aurait dû trouver que la contrainte n'est pas satisfaite.");
+        } else {
+            System.out.println("Mon programme passe le troisième test avec succès.");
+        }
     }
 
 }
