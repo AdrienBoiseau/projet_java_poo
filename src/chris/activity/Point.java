@@ -1,27 +1,27 @@
-package hello;
+package chris.activity;
 
-public class Point {
+class Point {
 
-    int x, y;
+    private int x, y;
 
-    public Point(int X, int Y) {
+    Point(int X, int Y) {
         setX(X);
         setY(Y);
     }
 
-    public int getX() {
+    int getX() {
         return x;
     }
 
-    public int getY() {
-        return y;
-    }
-
-    public void setX(int x) {
+    private void setX(int x) {
         this.x = x;
     }
 
-    public void setY(int y) {
+    int getY() {
+        return y;
+    }
+
+    private void setY(int y) {
         this.y = y;
     }
 

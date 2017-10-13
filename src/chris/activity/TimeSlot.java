@@ -1,9 +1,9 @@
-package hello;
+package chris.activity;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class TimeSlot {
+class TimeSlot {
     private GregorianCalendar begin, end;
     private String label;
 

@@ -1,18 +1,18 @@
-package hello;
+package chris.activity;
 
 import java.util.GregorianCalendar;
 
-public class main {
+public class Main {
     public static void main(String[] args){
         TP3();
 
     }
 
-    static void print(String m){
+    static private void print(String m) {
         System.out.println(m);
     }
 
-    static boolean TP2(){
+    static private void TP2() {
         print("Hello world!");
         Point a = new Point(3,4);
         print(a.get_representation());
@@ -34,17 +34,17 @@ public class main {
         print(String.valueOf(TimeSlot.overlaps(ts1, ts2)));
         print(String.valueOf(TimeSlot.overlaps(ts1, ts3)));
         print(String.valueOf(TimeSlot.overlaps(ts2, ts3)));
-        return true;
+        return;
     }
 
-    static boolean TP3(){
+    static private void TP3() {
         // Objets
         Activity options = new Activity ("Choisir mes options", 70);
         Activity ip = new Activity ("Inscription pédagogique", 30);
         PrecedenceConstraint contrainte = new PrecedenceConstraint (options, ip);
-        GregorianCalendar date_1 = new GregorianCalendar(2012, 11, 31, 20, 0, 0);
-        GregorianCalendar date_2 = new GregorianCalendar(2013, 0, 1, 6, 0, 0);
-        GregorianCalendar date_3 = new GregorianCalendar(2013, 0, 1, 7, 0, 0);
+        GregorianCalendar date_1 = new GregorianCalendar(2012, 11, 31, 9, 0, 0);
+        GregorianCalendar date_2 = new GregorianCalendar(2012, 11, 31, 10, 0, 0);
+        GregorianCalendar date_3 = new GregorianCalendar(2012, 11, 31, 11, 0, 0);
 
 // Test avec une programmation censée satisfaire la contrainte
         if ( ! contrainte.isSatisfied(date_1, date_3) ) {
@@ -70,7 +70,7 @@ public class main {
         } else {
             System.out.println("Mon programme passe le troisième test avec succès.");
         }
-        return true;
+        return;
     }
 
 }

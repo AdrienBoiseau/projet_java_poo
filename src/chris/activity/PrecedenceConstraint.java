@@ -1,12 +1,13 @@
-package hello;
+package chris.activity;
 
-import java.util.GregorianCalendar;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class PrecedenceConstraint {
 
-    Activity first;
-    Activity second;
+    private Activity first;
+    private Activity second;
 
     PrecedenceConstraint(Activity f, Activity s){
         this.first = f;
@@ -15,12 +16,17 @@ public class PrecedenceConstraint {
 
     static private boolean is_equal_or_less(GregorianCalendar date,
                                             GregorianCalendar limit){
-        return (date.get(Calendar.YEAR) <= limit.get(Calendar.YEAR) &
-                date.get(Calendar.DAY_OF_YEAR) <= limit.get(Calendar.DAY_OF_YEAR)&
-                date.get(Calendar.HOUR_OF_DAY) <= limit.get(Calendar.HOUR_OF_DAY));
+        return date.compareTo(limit) <= 0;
     }
-    boolean isSatisfied(GregorianCalendar date1,
-                        GregorianCalendar date2){
+
+    protected boolean isSatisfied(GregorianCalendar date1,
+                                  GregorianCalendar date2) {
+        SimpleDateFormat sdf = new SimpleDateFormat("d MMM yyyy hh:mm aaa");
+        System.out.println(sdf.format(date1.getTime()));
+        date1.add(Calendar.MINUTE, this.first.duration);
+        System.out.println(sdf.format(date1.getTime()));
+
+        System.out.println(sdf.format(date2.getTime()));
         return is_equal_or_less(date1, date2);
     }
 
