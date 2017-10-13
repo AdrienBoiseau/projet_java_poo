@@ -6,8 +6,8 @@ import java.util.GregorianCalendar;
 
 public class PrecedenceConstraint {
 
-    private Activity first;
-    private Activity second;
+    Activity first;
+    Activity second;
 
     PrecedenceConstraint(Activity f, Activity s){
         this.first = f;

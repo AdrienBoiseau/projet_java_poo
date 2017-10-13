@@ -23,6 +23,8 @@ class PrecedenceConstraintWithDuration extends PrecedenceConstraint {
 
     protected boolean isSatisfied(GregorianCalendar date,
                                   GregorianCalendar next_date) {
+        date.add(Calendar.MINUTE, first.duration);
+
         int min_min_shift = this.pause_min % 60;
         int min_hour_shift = this.pause_min / 60 % 24;
         int min_day_shift = this.pause_min / 60 / 24;
