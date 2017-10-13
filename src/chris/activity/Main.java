@@ -7,9 +7,10 @@ import java.util.HashMap;
 
 public class Main {
 
-    public static SimpleDateFormat sdf = new SimpleDateFormat("d MMM yyyy hh:mm aaa");
+    static SimpleDateFormat sdf = new SimpleDateFormat("d MMM yyyy hh:mm aaa");
 
     public static void main(String[] args){
+        TP2();
         TP3();
 
     }
