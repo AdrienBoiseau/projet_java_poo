@@ -52,10 +52,11 @@ public class exec {
         Activity dejeuner = new Activity("Déjeuner",30);
         Activity cours = new Activity("Cours",120);
 
-        GregorianCalendar debut = new GregorianCalendar()
+        GregorianCalendar debut = new GregorianCalendar();
+        GregorianCalendar fin = new GregorianCalendar();
         PrecedenceConstraintWithDuration contrainteDeTemps = new PrecedenceConstraintWithDuration(dejeuner,cours,60,15);
-        Boolean test = contrainteDeTemps.isSatisfied();
-        System.out.println("Résultat du test = ");
+        Boolean test2 = contrainteDeTemps.isSatisfied(debut,fin);
+        System.out.println("Résultat du test = "+test2);
 
     }
 }

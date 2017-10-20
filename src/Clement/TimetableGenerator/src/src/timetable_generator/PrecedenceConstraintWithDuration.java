@@ -34,9 +34,7 @@ public class PrecedenceConstraintWithDuration extends PrecedenceConstraint{
         test = firstDate;
         test.add(Calendar.MINUTE,this.first.duration);
 
-        if (firstDate.compareTo(secondDate) < 0) {
-            return ((test.compareTo(borneInf)>=0) && (test.compareTo(borneSup) <= 0));
-        }
+
         return false;
     }
 }
