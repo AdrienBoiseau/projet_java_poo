@@ -19,18 +19,17 @@ class PrecedenceConstraintWithDuration extends PrecedenceConstraint {
     }
 
 
-    protected boolean isSatisfied(GregorianCalendar date,
+    protected boolean isSatisfied(GregorianCalendar d,
                                   GregorianCalendar next_date) {
-        System.out.println(sdf.format(date.getTime()));
+        GregorianCalendar date = (GregorianCalendar) d.clone();
         date.add(Calendar.MINUTE, first.duration);
-        System.out.println(sdf.format(date.getTime()));
         GregorianCalendar lim_min = (GregorianCalendar) next_date.clone();
         lim_min.add(Calendar.MINUTE, -this.pause_min);
 
         GregorianCalendar lim_max = (GregorianCalendar) next_date.clone();
         lim_max.add(Calendar.MINUTE, -this.pause_max);
 
-        System.out.println(sdf.format(lim_min.getTime()) + " <= " + sdf.format(date.getTime()) + " <= " + sdf.format(lim_max.getTime()) + " ? ");
+        System.out.println(sdf.format(lim_max.getTime()) + " <= " + sdf.format(date.getTime()) + " <= " + sdf.format(lim_min.getTime()) + " ? ");
 
         return is_equal_or_less(lim_max, date) & is_equal_or_less(date, lim_min);
     }

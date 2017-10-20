@@ -10,7 +10,8 @@ public class Main {
     static SimpleDateFormat sdf = new SimpleDateFormat("d MMM yyyy hh:mm aaa");
 
     public static void main(String[] args){
-        TP2();
+
+        //TP2();
         TP3();
 
     }
@@ -82,17 +83,17 @@ public class Main {
             System.out.println("Mon programme passe le troisième test avec succès.");
         }
 
-        if (contrainte_with_duration.isSatisfied(date_1, date_3)) {
+        if (!contrainte_with_duration.isSatisfied(date_1, date_3)) {
             System.out.println("Mon programme ne marche pas.");
-            System.out.println("Il aurait dû trouver que la contrainte n'est pas satisfaite.");
+            System.out.println("Il aurait dû trouver que la contrainte est satisfaite.");
         } else {
             System.out.println("Mon programme passe le premier test avec succès.");
         }
 
 // Test avec une programmation censée ne pas satisfaire la contrainte
-        if (!contrainte_with_duration.isSatisfied(date_2, date_1)) {
+        if (contrainte_with_duration.isSatisfied(date_2, date_1)) {
             System.out.println("Mon programme ne marche pas.");
-            System.out.println("Il aurait dû trouver que la contrainte est satisfaite.");
+            System.out.println("Il aurait dû trouver que la contrainte n'est pas satisfaite.");
         } else {
             System.out.println("Mon programme passe le deuxième test avec succès.");
         }
@@ -130,6 +131,8 @@ public class Main {
         cons_true.add(new PrecedenceConstraint(act_b, act_c));
 
         System.out.println(sched.satisfies(cons_true));
+        System.out.println(sched.toString());
+
 
         ArrayList<PrecedenceConstraint> cons_false = new ArrayList<>();
 
@@ -138,6 +141,7 @@ public class Main {
         cons_false.add(new PrecedenceConstraint(act_c, act_b));
 
         System.out.println(sched.satisfies(cons_false));
+        System.out.println(sched.toString());
 
 
     }
