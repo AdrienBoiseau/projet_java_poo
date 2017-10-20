@@ -143,6 +143,13 @@ public class Main {
         System.out.println(sched.satisfies(cons_false));
         System.out.println(sched.toString());
 
+        ArrayList<Activity> activities = new ArrayList<>();
+        activities.add(act_a);
+        activities.add(act_b);
+        activities.add(act_c);
+
+        print(Schedule.computeSchedule(activities, cons_true).toString());
+
 
     }
 

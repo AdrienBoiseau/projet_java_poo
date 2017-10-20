@@ -1,18 +1,19 @@
 package chris.activity;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
+import java.util.*;
 
 import static chris.activity.Main.sdf;
 
 public class Schedule {
-    private HashMap<Activity, GregorianCalendar> sched = new HashMap<Activity, GregorianCalendar>();
+    private HashMap<Activity, GregorianCalendar> sched = new HashMap<>();
 
     Schedule(HashMap<Activity, GregorianCalendar> s) {
         this.sched = s;
     }
+
+    private Schedule() {
+    }
+
 
     boolean satisfies(ArrayList<PrecedenceConstraint> constraints) {
 
@@ -62,5 +63,46 @@ public class Schedule {
             res = res.concat(sdf.format(debut.getTime()) + " -> " + sdf.format(fin.getTime()) + ": " + act.description + "\n");
         }
         return res;
+    }
+
+    static Schedule computeSchedule(ArrayList<Activity> activities, ArrayList<PrecedenceConstraint> constraints) {
+        GregorianCalendar dummy_cal = new GregorianCalendar(2017, 5, 30, 8, 0, 0);
+        Schedule planning = new Schedule();
+        ArrayList<Activity> to_plannify = (ArrayList<Activity>) activities.clone();
+        for (int i = 0; i < activities.size(); i++) {
+            // get next planifiable act
+            Activity act = next(to_plannify, constraints, planning.sched.keySet());
+            // get his index
+            int i_act = to_plannify.indexOf(act);
+            // add it to the schedule at the next planiffiable moment
+            planning.sched.put(act, (GregorianCalendar) dummy_cal.clone());
+            // on ajoute la durée de l'activité au compteur de temps possible pour avancer dans le temps suffisamment
+            dummy_cal.add(Calendar.MINUTE, act.duration);
+            // on vire l 'eactivité de la liste des trucs a planiffier.
+            to_plannify.remove(i_act);
+        }
+        return planning;
+    }
+
+
+    static private Activity next(ArrayList<Activity> activities, ArrayList<PrecedenceConstraint> constraints, Set<Activity> planified) {
+        for (Activity act : activities) {
+            // Act !== planned activities
+            if (!planified.contains(act)) {
+                boolean ok = true;
+                for (PrecedenceConstraint con : constraints) {
+                    // no constraints telles que X => act
+                    // et tel que X !== planned activities
+                    if (con.second.equals(act) && !planified.contains(con.first)) {
+                        ok = false;
+                        break;
+                    }
+                }
+                if (ok) {
+                    return act;//
+                }
+            }
+        }
+        return null;
     }
 }
