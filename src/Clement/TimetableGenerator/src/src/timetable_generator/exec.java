@@ -1,14 +1,12 @@
-import timetable_generator.Activity;
-import timetable_generator.PrecedenceConstraint;
-import timetable_generator.Timeslot;
-import timetable_generator.PrecedenceConstraintWithDuration;
+package timetable_generator;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 
 public class exec {
     public static void main(String[] tab) {
-        
+        /*
         Timeslot test = new Timeslot("TP POO");
         test.setStart(13,00,20,10,2017);
         test.setEnd(16,45,20,10,2017);
@@ -48,14 +46,17 @@ public class exec {
         } else {
             System.out.println("Mon programme passe le troisième test avec succès.");
         }
+        */
 
         Activity dejeuner = new Activity("Déjeuner",30);
         Activity cours = new Activity("Cours",120);
 
-        GregorianCalendar debut = new GregorianCalendar();
-        GregorianCalendar fin = new GregorianCalendar();
+        GregorianCalendar debutDej = new GregorianCalendar();
+
+        GregorianCalendar debutCours = new GregorianCalendar();
+
         PrecedenceConstraintWithDuration contrainteDeTemps = new PrecedenceConstraintWithDuration(dejeuner,cours,60,15);
-        Boolean test2 = contrainteDeTemps.isSatisfied(debut,fin);
+        Boolean test2 = contrainteDeTemps.isSatisfied(debutDej,debutCours);
         System.out.println("Résultat du test = "+test2);
 
     }
