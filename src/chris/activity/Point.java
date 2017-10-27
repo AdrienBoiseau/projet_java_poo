@@ -26,7 +26,7 @@ class Point {
     }
 
     String get_representation() {
-        return String.format("%d, %d",this.x, this.y);
+        return String.format("%d, %d", this.x, this.y);
     }
 
     Point get_symetry() {

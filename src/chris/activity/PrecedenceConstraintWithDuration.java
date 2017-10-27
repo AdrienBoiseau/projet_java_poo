@@ -29,11 +29,14 @@ class PrecedenceConstraintWithDuration extends PrecedenceConstraint {
         GregorianCalendar lim_max = (GregorianCalendar) next_date.clone();
         lim_max.add(Calendar.MINUTE, -this.pause_max);
 
-        System.out.println(sdf.format(lim_max.getTime()) + " <= " + sdf.format(date.getTime()) + " <= " + sdf.format(lim_min.getTime()) + " ? ");
+        System.out.println(sdf.format(
+                lim_max.getTime()) +
+                " <= " +
+                sdf.format(date.getTime()) +
+                " <= " +
+                sdf.format(lim_min.getTime()) +
+                " ? ");
 
         return is_equal_or_less(lim_max, date) & is_equal_or_less(date, lim_min);
     }
-
-
-
 }

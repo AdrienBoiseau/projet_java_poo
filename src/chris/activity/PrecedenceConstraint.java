@@ -10,7 +10,7 @@ public class PrecedenceConstraint {
     Activity first;
     Activity second;
 
-    PrecedenceConstraint(Activity f, Activity s){
+    PrecedenceConstraint(Activity f, Activity s) {
         this.first = f;
         this.second = s;
     }
