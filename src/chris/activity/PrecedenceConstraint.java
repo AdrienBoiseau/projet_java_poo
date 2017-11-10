@@ -21,8 +21,8 @@ public class PrecedenceConstraint {
         return date.compareTo(limit) <= 0;
     }
 
-    protected boolean isSatisfied(GregorianCalendar date1,
-                                  GregorianCalendar date2) {
+    public boolean isSatisfied(GregorianCalendar date1,
+                               GregorianCalendar date2) {
         GregorianCalendar d = (GregorianCalendar) date1.clone();
         d.add(Calendar.MINUTE, this.first.duration);
         System.out.println(sdf.format(d.getTime()) + "<=" + sdf.format(date2.getTime()) + "?");

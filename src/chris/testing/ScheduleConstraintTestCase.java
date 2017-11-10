@@ -1,15 +1,18 @@
-package chris.activity;
+package chris.testing;
+
+import chris.activity.PrecedenceConstraint;
+import chris.activity.Schedule;
 
 import java.util.ArrayList;
 
-class ScheduleConstraintTestCase {
+public class ScheduleConstraintTestCase {
 
     private final boolean expectedTo;
     private final Schedule schedule;
     private final ArrayList<PrecedenceConstraint> constraints;
 
 
-    ScheduleConstraintTestCase(Schedule schedule, ArrayList<PrecedenceConstraint> constraints, boolean result_expected) {
+    public ScheduleConstraintTestCase(Schedule schedule, ArrayList<PrecedenceConstraint> constraints, boolean result_expected) {
         this.expectedTo = result_expected;
         this.schedule = schedule;
         this.constraints = constraints;

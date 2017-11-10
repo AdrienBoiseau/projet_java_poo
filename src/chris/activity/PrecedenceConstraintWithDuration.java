@@ -19,8 +19,8 @@ class PrecedenceConstraintWithDuration extends PrecedenceConstraint {
     }
 
 
-    protected boolean isSatisfied(GregorianCalendar d,
-                                  GregorianCalendar next_date) {
+    public boolean isSatisfied(GregorianCalendar d,
+                               GregorianCalendar next_date) {
         GregorianCalendar date = (GregorianCalendar) d.clone();
         date.add(Calendar.MINUTE, first.duration);
         GregorianCalendar lim_min = (GregorianCalendar) next_date.clone();

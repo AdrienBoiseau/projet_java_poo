@@ -1,6 +1,6 @@
-package chris.activity;
+package chris.testing;
 
-class TestFramework {
+public class TestFramework {
 
     static private boolean print_test_result(Boolean result) {
         if (result)
@@ -10,7 +10,7 @@ class TestFramework {
         return result;
     }
 
-    static boolean run_schedule_constraints_test(ScheduleConstraintTestCase test) {
+    public static boolean run_schedule_constraints_test(ScheduleConstraintTestCase test) {
         boolean constraints_met = test.run_test_case();
         if (constraints_met)
             System.out.println("SCHEDULES SATISFIES CONDITIONS");
@@ -29,7 +29,7 @@ class TestFramework {
         return print_test_result(constraints_met == test.isExpectedTo());
     }
 
-    static boolean run_constraint_test(ConstraintTestCase test) {
+    public static boolean run_constraint_test(ConstraintTestCase test) {
         boolean constraints_met = test.run_test_case();
         if (constraints_met)
             System.out.println("CONSTRAINT SATISFIES DATES CONSTRAINTS");

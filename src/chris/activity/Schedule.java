@@ -57,7 +57,7 @@ public class Schedule {
         return null;
     }
 
-    boolean satisfies(ArrayList<PrecedenceConstraint> constraints) {
+    public boolean satisfies(ArrayList<PrecedenceConstraint> constraints) {
 
         for (PrecedenceConstraint contraint : constraints) {
             if (this.sched.get(contraint.first) != null & this.sched.get(contraint.second) != null)
