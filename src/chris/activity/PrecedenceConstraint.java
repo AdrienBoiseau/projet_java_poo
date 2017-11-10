@@ -5,7 +5,7 @@ import java.util.GregorianCalendar;
 
 import static chris.activity.Main.sdf;
 
-public class PrecedenceConstraint extends BinaryConstraint {
+public class PrecedenceConstraint extends BinaryConstraint implements Constraint {
 
     public PrecedenceConstraint(Activity f, Activity s) {
         this.first = f;

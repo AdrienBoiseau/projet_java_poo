@@ -3,7 +3,7 @@ package chris.activity;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class MeetConstraint extends BinaryConstraint {
+public class MeetConstraint extends BinaryConstraint implements Constraint {
 
     public MeetConstraint(Activity f, Activity s) {
         this.first = f;
@@ -16,4 +16,5 @@ public class MeetConstraint extends BinaryConstraint {
         end_date1.add(Calendar.MINUTE, first.duration);
         return date2.compareTo(end_date1) == 0;
     }
+
 }

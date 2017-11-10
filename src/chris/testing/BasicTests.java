@@ -58,6 +58,12 @@ class BasicTests {
         System.out.println("Schedule test: don't meet constraints => " +
                 ((no_meet_constraints_schedule(sched)) ? "PASSED" : "FAILED"));
 
+        System.out.println("Schedule test: 0 mins max span constraint => " +
+                ((no_max_duration_schedule(sched)) ? "PASSED" : "FAILED"));
+
+        System.out.println("Schedule test: 1 year max span constraint => " +
+                ((max_duration_schedule(sched)) ? "PASSED" : "FAILED"));
+
 
     }
 
@@ -134,5 +140,13 @@ class BasicTests {
                         activities.get(2)));
 
         return !sched.satisfies(constraints);
+    }
+
+    private static boolean no_max_duration_schedule(Schedule sched) {
+        return !new MaxSpanConstraint(0).isSatisfied(sched);
+    }
+
+    private static boolean max_duration_schedule(Schedule sched) {
+        return new MaxSpanConstraint(60 * 24 * 365).isSatisfied(sched);
     }
 }
