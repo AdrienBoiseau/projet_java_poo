@@ -7,7 +7,7 @@ import static chris.activity.Main.sdf;
 public class Schedule {
     private HashMap<Activity, GregorianCalendar> sched = new HashMap<>();
 
-    Schedule(HashMap<Activity, GregorianCalendar> s) {
+    public Schedule(HashMap<Activity, GregorianCalendar> s) {
         this.sched = s;
     }
 
@@ -68,7 +68,7 @@ public class Schedule {
         return true;
     }
 
-    private ArrayList<Activity> get_sorted_activities() {
+    public ArrayList<Activity> get_sorted_activities() {
         ArrayList<Activity> a_ar = new ArrayList<>();
 
 
@@ -106,4 +106,5 @@ public class Schedule {
         }
         return res;
     }
+
 }

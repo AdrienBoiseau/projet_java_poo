@@ -1,11 +1,11 @@
 package chris.activity;
 
-class Activity {
+public class Activity {
 
     int duration = 0;
     String description = "";
 
-    Activity(String desc, int duration) {
+    public Activity(String desc, int duration) {
         this.description = desc;
         this.duration = duration;
 
