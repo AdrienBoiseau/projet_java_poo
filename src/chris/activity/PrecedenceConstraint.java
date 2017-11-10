@@ -5,10 +5,7 @@ import java.util.GregorianCalendar;
 
 import static chris.activity.Main.sdf;
 
-public class PrecedenceConstraint {
-
-    Activity first;
-    Activity second;
+public class PrecedenceConstraint extends BinaryConstraint {
 
     public PrecedenceConstraint(Activity f, Activity s) {
         this.first = f;
@@ -21,6 +18,7 @@ public class PrecedenceConstraint {
         return date.compareTo(limit) <= 0;
     }
 
+    @Override
     public boolean isSatisfied(GregorianCalendar date1,
                                GregorianCalendar date2) {
         GregorianCalendar d = (GregorianCalendar) date1.clone();
