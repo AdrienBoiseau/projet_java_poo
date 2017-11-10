@@ -12,6 +12,7 @@ public class Schedule {
     }
 
     private Schedule() {
+
     }
 
     static Schedule computeSchedule(ArrayList<Activity> activities, ArrayList<BinaryConstraint> constraints) {

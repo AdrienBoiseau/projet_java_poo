@@ -6,6 +6,11 @@ public abstract class BinaryConstraint implements Constraint {
     Activity first;
     Activity second;
 
+    public BinaryConstraint(Activity f, Activity s) {
+        first = f;
+        second = s;
+    }
+
     public abstract boolean isSatisfied(GregorianCalendar date1,
                                         GregorianCalendar date2);
 

@@ -11,8 +11,9 @@ public class PrecedenceConstraintWithDuration extends PrecedenceConstraint imple
     private int pause_max = 0;
 
 
-    PrecedenceConstraintWithDuration(Activity a1, Activity a2, int pause_min, int pause_max) {
-        super(a1, a2);
+    PrecedenceConstraintWithDuration(Activity f, Activity s, int pause_min,
+                                     int pause_max) {
+        super(f, s);
         //pause en minutes
         this.pause_min = pause_min;
         this.pause_max = pause_max;

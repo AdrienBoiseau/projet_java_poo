@@ -6,8 +6,7 @@ import java.util.GregorianCalendar;
 public class MeetConstraint extends BinaryConstraint implements Constraint {
 
     public MeetConstraint(Activity f, Activity s) {
-        this.first = f;
-        this.second = s;
+        super(f, s);
     }
 
     @Override

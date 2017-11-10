@@ -8,8 +8,7 @@ import static chris.activity.Main.sdf;
 public class PrecedenceConstraint extends BinaryConstraint implements Constraint {
 
     public PrecedenceConstraint(Activity f, Activity s) {
-        this.first = f;
-        this.second = s;
+        super(f, s);
     }
 
     static boolean is_equal_or_less(GregorianCalendar date,
