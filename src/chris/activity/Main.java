@@ -128,7 +128,7 @@ public class Main {
 
         Schedule sched = new Schedule(horaires);
 
-        ArrayList<PrecedenceConstraint> cons_true = new ArrayList<>();
+        ArrayList<BinaryConstraint> cons_true = new ArrayList<>();
 
         cons_true.add(new PrecedenceConstraint(act_a, act_b));
         cons_true.add(new PrecedenceConstraint(act_a, act_c));
@@ -138,7 +138,7 @@ public class Main {
         System.out.println(sched.toString());
 
 
-        ArrayList<PrecedenceConstraint> cons_false = new ArrayList<>();
+        ArrayList<BinaryConstraint> cons_false = new ArrayList<>();
 
         cons_false.add(new PrecedenceConstraint(act_a, act_b));
         cons_false.add(new PrecedenceConstraint(act_a, act_c));
@@ -178,6 +178,8 @@ public class Main {
                         date_1,
                         date_2,
                         true));
+
+        TestFramework.run_basic_tests();
 
     }
 

@@ -1,23 +1,40 @@
 package chris.testing;
 
-import chris.activity.Activity;
-import chris.activity.PrecedenceConstraint;
-import chris.activity.Schedule;
+import chris.activity.*;
 
 import java.util.*;
 import java.util.stream.IntStream;
 
-public class BasicTests {
+class BasicTests {
 
 
-    public void schedule_tests() {
+    static void run_schedule_tests() {
+
         Activity act_a = new Activity("a", 60);
-        Activity act_b = new Activity("b", 60);
-        Activity act_c = new Activity("c", 120);
+        GregorianCalendar date_a = new GregorianCalendar(
+                2012,
+                11,
+                31,
+                9,
+                0,
+                0);
 
-        GregorianCalendar date_a = new GregorianCalendar(2012, 11, 31, 9, 0, 0);
-        GregorianCalendar date_b = new GregorianCalendar(2012, 11, 31, 10, 0, 0);
-        GregorianCalendar date_c = new GregorianCalendar(2012, 11, 31, 11, 0, 0);
+        Activity act_b = new Activity("b", 60);
+        GregorianCalendar date_b = new GregorianCalendar(
+                2012,
+                11,
+                31,
+                10,
+                0,
+                0);
+
+        Activity act_c = new Activity("c", 120);
+        GregorianCalendar date_c = new GregorianCalendar(2012,
+                11,
+                31,
+                11,
+                0,
+                0);
 
         HashMap<Activity, GregorianCalendar> horaires = new HashMap<>();
         horaires.put(act_a, date_a);
@@ -35,12 +52,18 @@ public class BasicTests {
         System.out.println("Schedule test: random ok constraints => " +
                 ((random_ok_constraints_schedule(sched)) ? "PASSED" : "FAILED"));
 
+        System.out.println("Schedule test: meet constraints => " +
+                ((meet_constraints_schedule(sched)) ? "PASSED" : "FAILED"));
+
+        System.out.println("Schedule test: don't meet constraints => " +
+                ((no_meet_constraints_schedule(sched)) ? "PASSED" : "FAILED"));
+
 
     }
 
-    private boolean random_ok_constraints_schedule(Schedule sched) {
+    private static boolean random_ok_constraints_schedule(Schedule sched) {
 
-        ArrayList<PrecedenceConstraint> constraints = new ArrayList<>();
+        ArrayList<BinaryConstraint> constraints = new ArrayList<>();
         ArrayList<Activity> activities = sched.get_sorted_activities();
         int n = activities.size();
         Random rand = new Random();
@@ -60,9 +83,9 @@ public class BasicTests {
         return sched.satisfies(constraints);
     }
 
-    private boolean no_solution_schedule(Schedule sched) {
+    private static boolean no_solution_schedule(Schedule sched) {
 
-        ArrayList<PrecedenceConstraint> constraints = new ArrayList<>();
+        ArrayList<BinaryConstraint> constraints = new ArrayList<>();
         ArrayList<Activity> activities = sched.get_sorted_activities();
         int n = activities.size();
         for (int i = 0; i < n; i++) {
@@ -73,9 +96,43 @@ public class BasicTests {
         return !sched.satisfies(constraints);
     }
 
-    private boolean no_constraints_schedule(Schedule sched) {
-        ArrayList<PrecedenceConstraint> constraints = new ArrayList<>();
+    private static boolean no_constraints_schedule(Schedule sched) {
+        ArrayList<BinaryConstraint> constraints = new ArrayList<>();
 
         return sched.satisfies(constraints);
+    }
+
+    private static boolean meet_constraints_schedule(Schedule sched) {
+
+        ArrayList<BinaryConstraint> constraints = new ArrayList<>();
+        ArrayList<Activity> activities = sched.get_sorted_activities();
+
+        constraints.add(
+                new MeetConstraint(
+                        activities.get(0),
+                        activities.get(1)));
+        constraints.add(
+                new MeetConstraint(
+                        activities.get(1),
+                        activities.get(2)));
+
+        return sched.satisfies(constraints);
+    }
+
+    private static boolean no_meet_constraints_schedule(Schedule sched) {
+
+        ArrayList<BinaryConstraint> constraints = new ArrayList<>();
+        ArrayList<Activity> activities = sched.get_sorted_activities();
+
+        constraints.add(
+                new MeetConstraint(
+                        activities.get(0),
+                        activities.get(2)));
+        constraints.add(
+                new MeetConstraint(
+                        activities.get(1),
+                        activities.get(2)));
+
+        return !sched.satisfies(constraints);
     }
 }

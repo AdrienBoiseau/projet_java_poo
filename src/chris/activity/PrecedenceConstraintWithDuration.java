@@ -5,10 +5,10 @@ import java.util.GregorianCalendar;
 
 import static chris.activity.Main.sdf;
 
-class PrecedenceConstraintWithDuration extends PrecedenceConstraint {
+public class PrecedenceConstraintWithDuration extends PrecedenceConstraint {
 
-    int pause_min = 0;
-    int pause_max = 0;
+    private int pause_min = 0;
+    private int pause_max = 0;
 
 
     PrecedenceConstraintWithDuration(Activity a1, Activity a2, int pause_min, int pause_max) {
