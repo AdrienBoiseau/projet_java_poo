@@ -107,4 +107,8 @@ public class Schedule {
         return res;
     }
 
+    public GregorianCalendar get_date(Activity a) {
+        return sched.get(a);
+    }
+
 }
