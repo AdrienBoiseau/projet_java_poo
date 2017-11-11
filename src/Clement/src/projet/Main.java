@@ -100,7 +100,7 @@ public class Main {
         PrecedenceConstraint contrainte1 = new PrecedenceConstraint(activite3,activite2);
         PrecedenceConstraint contrainte2 = new PrecedenceConstraint(activite1,activite3);
 
-        ArrayList<PrecedenceConstraint> toutesLesContraintes = new ArrayList ();
+        ArrayList toutesLesContraintes = new ArrayList ();
         toutesLesContraintes.add(contrainte1);
         toutesLesContraintes.add(contrainte2);
 
