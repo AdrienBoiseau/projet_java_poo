@@ -7,6 +7,7 @@ public class Main {
     public static void main(String[] args) {
         //testTimeSlot();
         //testPrecedenceConstraint();
+        testShedule();
     }
 
     private static void testTimeSlot() {
@@ -96,8 +97,8 @@ public class Main {
 
         // Contraintes
         //PrecedenceConstraintWithDuration contrainte1 = ...; // Not implement
-        PrecedenceConstraint contrainte1 = new PrecedenceConstraint(activite2,activite3);
-        PrecedenceConstraint contrainte2 = new PrecedenceConstraint(activite1,activite2);
+        PrecedenceConstraint contrainte1 = new PrecedenceConstraint(activite3,activite2);
+        PrecedenceConstraint contrainte2 = new PrecedenceConstraint(activite1,activite3);
 
         ArrayList<PrecedenceConstraint> toutesLesContraintes = new ArrayList ();
         toutesLesContraintes.add(contrainte1);

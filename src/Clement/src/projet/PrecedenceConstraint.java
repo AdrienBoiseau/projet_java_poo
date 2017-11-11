@@ -28,7 +28,7 @@ public class PrecedenceConstraint {
 
     public boolean isSatisfied(int start, int end) {
         if (start < end) {
-            return (start+first.duration<=end);
+            return (start+(first.duration/60)<=end);
         } return false;
     }
 }
