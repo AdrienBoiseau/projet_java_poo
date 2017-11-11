@@ -1,5 +1,6 @@
 package projet;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class Main {
@@ -80,6 +81,44 @@ public class Main {
             System.out.println("Il aurait dû trouver que la contrainte n'est pas satisfaite.");
         } else {
             System.out.println("Mon programme passe le troisième test avec succès.");
+        }
+    }
+
+    private static void testPrecedenceConstraintWithDuration() {
+
+    }
+
+    private static void testShedule() {
+        // Activités
+        Activity activite1 = new Activity("Cours1",60);
+        Activity activite2 = new Activity("Cours2",60);
+        Activity activite3 = new Activity("Cours3",60);
+
+        // Contraintes
+        //PrecedenceConstraintWithDuration contrainte1 = ...; // Not implement
+        PrecedenceConstraint contrainte1 = new PrecedenceConstraint(activite2,activite3);
+        PrecedenceConstraint contrainte2 = new PrecedenceConstraint(activite1,activite2);
+
+        ArrayList<PrecedenceConstraint> toutesLesContraintes = new ArrayList ();
+        toutesLesContraintes.add(contrainte1);
+        toutesLesContraintes.add(contrainte2);
+
+
+        // Emploi du temps
+        int neufHeures = 9;
+        int dixHeures = 10;
+        int midi = 12;
+        Schedule emploiDuTemps = new Schedule ();
+        emploiDuTemps.add(activite1, neufHeures);
+        emploiDuTemps.add(activite2, midi);
+        emploiDuTemps.add(activite3, dixHeures);
+
+
+        // Tests
+        if ( emploiDuTemps.satisfies(toutesLesContraintes) ) {
+            System.out.println("Mon programme passe le premier test");
+        } else {
+            System.out.println("Mon programme ne passe pas le premier test");
         }
     }
 }
