@@ -14,11 +14,10 @@ public class PrecedenceConstraintGregorien {
 	}
 	
 	public boolean isSatisfied(GregorianCalendar date1,GregorianCalendar date2) {
-		System.out.println(date2.get(Calendar.HOUR) + " " + date2.get(Calendar.MINUTE));
 		GregorianCalendar prem = new GregorianCalendar();
 		prem = (GregorianCalendar)date1.clone();
 		prem.add(Calendar.MINUTE, this.first.duree);
-		if (prem.compareTo(date2)<0) {
+		if (prem.compareTo(date2)<=0) {
 			return true;
 		}
 		else {

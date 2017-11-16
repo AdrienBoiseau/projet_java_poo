@@ -2,11 +2,16 @@ package tpPackage;
 
 import java.util.GregorianCalendar;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ArrayList;
 
 public class exec {
 	public static void main(String[] args) {
 		
 		/*
+		
+		// TP 1 TIMESLOT
 		
 		// test sans calendrier
 
@@ -36,7 +41,9 @@ public class exec {
 		
 		*/
 		
+		/*
 		
+		// TP 2 HERITAGE
 		
 		// test sans calendrier
 		
@@ -44,8 +51,8 @@ public class exec {
 		Activity options = new Activity ("Choisir mes options", 70);
 		Activity ip = new Activity ("Inscription p�dagogique", 30);
 		
-		/*
-		 *(GregorianCalendar)
+		
+		 (GregorianCalendar)
 		PrecedenceConstraint contrainte = new PrecedenceConstraint (options, ip);
 		int neufHeures = 9;
 		int dixHeures = 10;
@@ -75,7 +82,7 @@ public class exec {
 		} else {
 		    System.out.println("Mon programme passe le troisi�me test avec succ�s.");
 		}
-		*/
+		
 		
 		Activity math = new Activity ("math", 50);
 		Activity poo = new Activity ("poo", 120);
@@ -98,7 +105,6 @@ public class exec {
 		cal2.set(Calendar.HOUR, 14);
 		cal2.set(Calendar.MINUTE, 0);
 		
-		/*
 		PrecedenceConstraintGregorien greg1 = new PrecedenceConstraintGregorien(options, ip);
 		PrecedenceConstraintGregorien greg2 = new PrecedenceConstraintGregorien(ip, options);
 		boolean testgre1 = greg1.isSatisfied(cal1,cal2);
@@ -106,13 +112,89 @@ public class exec {
 		boolean testgre2 = greg2.isSatisfied(cal1,cal2);
 		System.out.println(testgre1);
 		System.out.println(testgre2);
-		*/
 		
 		PrecedenceConstraintWithDurationGregorien greg3 = new PrecedenceConstraintWithDurationGregorien(math,poo,120,240);
 		boolean testgre3 = greg3.isSatisfied(cal1, cal2);
-		System.out.println(testgre3);
 		PrecedenceConstraintWithDurationGregorien greg4 = new PrecedenceConstraintWithDurationGregorien(poo,math,120,240);
 		boolean testgre4 = greg4.isSatisfied(cal1, cal2);
-		System.out.println(testgre4);
+		System.out.println(testgre3 + " " + testgre4);
+		
+		*/
+		
+		Activity math = new Activity ("math", 50);
+		Activity poo = new Activity ("poo", 120);
+		Activity te = new Activity ("te", 60);
+		Activity ang = new Activity ("ang",120);
+		
+		PrecedenceConstraint contrainte1 = new PrecedenceConstraint (math, poo);
+		PrecedenceConstraint contrainte2 = new PrecedenceConstraint (poo,te);
+		PrecedenceConstraint contrainte3 = new PrecedenceConstraint(te,ang);
+		
+		ArrayList<PrecedenceConstraint> touteslescontraintes = new ArrayList<>();
+		
+		touteslescontraintes.add(contrainte1);
+		touteslescontraintes.add(contrainte2);
+		touteslescontraintes.add(contrainte3);
+		
+		HashMap<Activity,Integer> hmapcontr = new HashMap<>();
+		
+		int neuf = 9;
+		int dix = 10;
+		int midi = 12;
+		int quatorze = 14;
+		hmapcontr.put(math,neuf);
+		hmapcontr.put(poo,dix);
+		hmapcontr.put(te,midi);
+		hmapcontr.put(ang,quatorze);
+		
+		Schedule emploitdutemps = new Schedule(hmapcontr);
+		
+		if (emploitdutemps.satisfies(touteslescontraintes)) {
+			System.out.println("Mon programme passe le premier test");
+		}else {
+			System.out.println("Mon programme ne passe pas le premier test");
+		}
+		
+		PrecedenceConstraintGregorien contrainte4 = new PrecedenceConstraintGregorien(math,poo);
+		PrecedenceConstraintGregorien contrainte5 = new PrecedenceConstraintGregorien(poo,te);
+		PrecedenceConstraintGregorien contrainte6 = new PrecedenceConstraintGregorien(te,ang);
+		
+		ArrayList<PrecedenceConstraintGregorien> touteslescontraintesgrego = new ArrayList<>();
+		
+		touteslescontraintesgrego.add(contrainte4);
+		touteslescontraintesgrego.add(contrainte5);
+		touteslescontraintesgrego.add(contrainte6);
+		
+		HashMap<Activity,GregorianCalendar> hmapgrego = new HashMap<>();
+		
+		GregorianCalendar neufgr = new GregorianCalendar();
+		GregorianCalendar dixgr = new GregorianCalendar();
+		GregorianCalendar midigr = new GregorianCalendar();
+		GregorianCalendar quatorzegr = new GregorianCalendar();
+		
+		neufgr.set(Calendar.HOUR, 9);
+		neufgr.set(Calendar.MINUTE, 0);
+		dixgr.set(Calendar.HOUR, 10);
+		dixgr.set(Calendar.MINUTE, 0);
+		midigr.set(Calendar.HOUR, 12);
+		midigr.set(Calendar.MINUTE, 0);
+		quatorzegr.set(Calendar.HOUR, 14);
+		quatorzegr.set(Calendar.MINUTE, 0);
+		
+		hmapgrego.put(math,neufgr);
+		hmapgrego.put(poo,dixgr);
+		hmapgrego.put(te,midigr);
+		hmapgrego.put(ang,quatorzegr);
+		
+		ScheduleGregorien emploitdutempsgrego = new ScheduleGregorien(hmapgrego);
+		
+		if (emploitdutempsgrego.satisfies(touteslescontraintesgrego)) {
+			System.out.println("Mon programme passe le premier test");
+		}else {
+			System.out.println("Mon programme ne passe pas le premier test");
+		}
+		
+		System.out.println("Emploi du temps : " + emploitdutemps);
+		
 	}
 }
