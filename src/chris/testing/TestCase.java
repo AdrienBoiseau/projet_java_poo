@@ -1,4 +1,4 @@
-package chris.activity;
+package chris.testing;
 
 class TestCase<I, O> {
     private final I input;

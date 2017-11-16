@@ -7,14 +7,15 @@ import static chris.activity.Main.sdf;
 public class Schedule {
     private HashMap<Activity, GregorianCalendar> sched = new HashMap<>();
 
-    Schedule(HashMap<Activity, GregorianCalendar> s) {
+    public Schedule(HashMap<Activity, GregorianCalendar> s) {
         this.sched = s;
     }
 
     private Schedule() {
+
     }
 
-    static Schedule computeSchedule(ArrayList<Activity> activities, ArrayList<PrecedenceConstraint> constraints) {
+    static Schedule computeSchedule(ArrayList<Activity> activities, ArrayList<BinaryConstraint> constraints) {
         GregorianCalendar dummy_cal = new GregorianCalendar(2017, 5, 30, 8, 0, 0);
         Schedule planning = new Schedule();
         ArrayList<Activity> to_plannify = (ArrayList<Activity>) activities.clone();
@@ -35,12 +36,12 @@ public class Schedule {
         return planning;
     }
 
-    static private Activity next(ArrayList<Activity> activities, ArrayList<PrecedenceConstraint> constraints, Set<Activity> planified) {
+    static private Activity next(ArrayList<Activity> activities, ArrayList<BinaryConstraint> constraints, Set<Activity> planified) {
         for (Activity act : activities) {
             // Act !== planned activities
             if (!planified.contains(act)) {
                 Activity next_act = act;
-                for (PrecedenceConstraint con : constraints) {
+                for (BinaryConstraint con : constraints) {
                     // no constraints telles que X => act
                     // et tel que X !== planned activities
                     if (con.second.equals(act) && !planified.contains(con.first)) {
@@ -57,9 +58,9 @@ public class Schedule {
         return null;
     }
 
-    boolean satisfies(ArrayList<PrecedenceConstraint> constraints) {
+    public boolean satisfies(ArrayList<BinaryConstraint> constraints) {
 
-        for (PrecedenceConstraint contraint : constraints) {
+        for (BinaryConstraint contraint : constraints) {
             if (this.sched.get(contraint.first) != null & this.sched.get(contraint.second) != null)
                 if (!contraint.isSatisfied(this.sched.get(contraint.first), this.sched.get(contraint.second))) {
                     return false;
@@ -68,7 +69,7 @@ public class Schedule {
         return true;
     }
 
-    private ArrayList<Activity> get_sorted_activities() {
+    public ArrayList<Activity> get_sorted_activities() {
         ArrayList<Activity> a_ar = new ArrayList<>();
 
 
@@ -106,4 +107,9 @@ public class Schedule {
         }
         return res;
     }
+
+    GregorianCalendar get_date(Activity a) {
+        return sched.get(a);
+    }
+
 }

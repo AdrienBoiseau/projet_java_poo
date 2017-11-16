@@ -25,4 +25,10 @@ public class PrecedenceConstraint {
             return true;
         } return false;
     }
+
+    public boolean isSatisfied(int start, int end) {
+        if (start < end) {
+            return (start+(first.duration/60)<=end);
+        } return false;
+    }
 }

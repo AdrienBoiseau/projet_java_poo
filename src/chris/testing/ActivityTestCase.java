@@ -1,4 +1,4 @@
-package chris.activity;
+package chris.testing;
 
 public class ActivityTestCase {
     boolean expectedTo;
