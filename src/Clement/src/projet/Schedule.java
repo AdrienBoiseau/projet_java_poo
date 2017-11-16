@@ -2,15 +2,16 @@ package projet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.Iterator;
+import java.util.Set;
 
 public class Schedule {
     /**
      *  Represent a timetable.
      *
-     * @TODO : method toString
+     * @TODO : nothing.
      */
-    Map<Activity, Integer> set_of_activity;
+    HashMap<Activity, Integer> set_of_activity;
 
     public Schedule() {
         /**
@@ -37,8 +38,40 @@ public class Schedule {
         this.set_of_activity.put(activity,hour);
     }
 
+    private ArrayList<Activity> getSortedActivities() {
+        ArrayList<Activity> sorted = new ArrayList<>();
+        for (Activity activity : this.set_of_activity.keySet()) {
+            if (sorted.isEmpty()) {
+                sorted.add(activity);
+            } else {
+                boolean lastIn = false;
+                for (int i = 0; i < sorted.size(); i++) {
+                    if (set_of_activity.get(sorted.get(i)) > set_of_activity.get(activity)) {
+                        sorted.add(i, activity);
+                        lastIn = true;
+                        break;
+                    }
+                }
+                if (lastIn == false) {
+                    sorted.add(activity);
+                }
+            }
+        }
+        return sorted;
+    }
+
     @Override
     public String toString() {
-        return "Not implemented yet.";
+        ArrayList<Activity> sorted = this.getSortedActivities();
+        String str = "";
+        for (Iterator it = sorted.iterator() ; it.hasNext(); ) {
+            Activity a = (Activity) it.next();
+            str += a.name + " : " + this.set_of_activity.get(a) + "h";
+            if (it.hasNext()) {
+                str += " ; ";
+            }
+
+        }
+        return str;
     }
 }

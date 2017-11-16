@@ -8,6 +8,20 @@ public class Main {
         //testTimeSlot();
         //testPrecedenceConstraint();
         testShedule();
+        //test();
+    }
+
+    private static void test() {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        list.add(0);
+        list.add(1);
+        list.add(2);
+
+        System.out.println(list);
+
+        list.add(3,3);
+
+        System.out.println(list);
     }
 
     private static void testTimeSlot() {
@@ -91,9 +105,9 @@ public class Main {
 
     private static void testShedule() {
         // Activités
-        Activity activite1 = new Activity("Cours1",60);
-        Activity activite2 = new Activity("Cours2",60);
-        Activity activite3 = new Activity("Cours3",60);
+        Activity activite1 = new Activity("CM",60);
+        Activity activite2 = new Activity("TP",60);
+        Activity activite3 = new Activity("TD",60);
 
         // Contraintes
         //PrecedenceConstraintWithDuration contrainte1 = ...; // Not implement
@@ -121,5 +135,6 @@ public class Main {
         } else {
             System.out.println("Mon programme ne passe pas le premier test");
         }
+        System.out.println("Mon emploi du temps : " + emploiDuTemps);
     }
 }

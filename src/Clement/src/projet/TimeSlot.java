@@ -4,12 +4,12 @@ import java.util.GregorianCalendar;
 
 public class TimeSlot {
     GregorianCalendar startDate,endDate;
-    String namming;
+    String name;
 
-    public TimeSlot(GregorianCalendar startDate, GregorianCalendar endDate, String namming) {
+    public TimeSlot(GregorianCalendar startDate, GregorianCalendar endDate, String name) {
         this.startDate = startDate;
         this.endDate = endDate;
-        this.namming = namming;
+        this.name = name;
     }
 
     public Boolean overlaps(TimeSlot arg){
@@ -30,7 +30,7 @@ public class TimeSlot {
     }
 
     public String getRepresentation() {
-        return  namming +
+        return  name +
                 " du " +
                 this.startDate.get(this.startDate.DAY_OF_MONTH) + "." +
                 this.startDate.get(this.startDate.MONTH) + "." +
