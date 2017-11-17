@@ -15,16 +15,26 @@ public class Schedule {
 
     }
 
-    static Schedule computeSchedule(ArrayList<Activity> activities, ArrayList<BinaryConstraint> constraints) {
-        GregorianCalendar dummy_cal = new GregorianCalendar(2017, 5, 30, 8, 0, 0);
+    static Schedule computeSchedule(final Collection<Activity>
+                                            activities,
+                                    final Collection<? extends BinaryConstraint>
+                                            constraints) {
+        GregorianCalendar dummy_cal = new GregorianCalendar(
+                2017,
+                5,
+                30,
+                8,
+                0,
+                0);
         Schedule planning = new Schedule();
-        ArrayList<Activity> to_plannify = (ArrayList<Activity>) activities.clone();
+        ArrayList<Activity> to_plannify = new ArrayList<>(activities);
+
         for (int i = 0; i < activities.size(); i++) {
             // get next planifiable act
             Activity act = next(to_plannify, constraints, planning.sched.keySet());
             if (act == null) {
                 System.out.println("EMPLOI DU TEMPS IMPOSSIBLE, CONSTRAINTES CIRCULAIRES");
-                return null;
+                return planning;
             }
             // add it to the schedule at the next planiffiable moment
             planning.sched.put(act, (GregorianCalendar) dummy_cal.clone());
@@ -36,15 +46,18 @@ public class Schedule {
         return planning;
     }
 
-    static private Activity next(ArrayList<Activity> activities, ArrayList<BinaryConstraint> constraints, Set<Activity> planified) {
+    static private Activity next(final Collection<Activity> activities,
+                                 final Collection<? extends BinaryConstraint>
+                                         constraints,
+                                 final Collection<Activity> plannified) {
         for (Activity act : activities) {
             // Act !== planned activities
-            if (!planified.contains(act)) {
+            if (!plannified.contains(act)) {
                 Activity next_act = act;
                 for (BinaryConstraint con : constraints) {
                     // no constraints telles que X => act
                     // et tel que X !== planned activities
-                    if (con.second.equals(act) && !planified.contains(con.first)) {
+                    if (con.second.equals(act) && !plannified.contains(con.first)) {
                         next_act = null;
                         break;
                     }
@@ -58,13 +71,13 @@ public class Schedule {
         return null;
     }
 
-    public boolean satisfies(ArrayList<BinaryConstraint> constraints) {
+    public boolean satisfies(final Collection<? extends Constraint>
+                                     constraints) {
 
-        for (BinaryConstraint contraint : constraints) {
-            if (this.sched.get(contraint.first) != null & this.sched.get(contraint.second) != null)
-                if (!contraint.isSatisfied(this.sched.get(contraint.first), this.sched.get(contraint.second))) {
-                    return false;
-                }
+        for (Constraint constraint : constraints) {
+            if (!constraint.isSatisfied(this))
+                return false;
+
         }
         return true;
     }
@@ -108,7 +121,7 @@ public class Schedule {
         return res;
     }
 
-    GregorianCalendar get_date(Activity a) {
+    GregorianCalendar get_date(final Activity a) {
         return sched.get(a);
     }
 
