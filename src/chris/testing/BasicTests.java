@@ -9,6 +9,7 @@ class BasicTests {
 
 
     static void run_schedule_tests() {
+        List<Activity> act_span = new ArrayList<>();
 
         Activity act_a = new Activity("a", 60);
         GregorianCalendar date_a = new GregorianCalendar(
@@ -41,6 +42,10 @@ class BasicTests {
         horaires.put(act_b, date_b);
         horaires.put(act_c, date_c);
 
+        act_span.add(act_a);
+        act_span.add(act_b);
+        act_span.add(act_c);
+
         Schedule sched = new Schedule(horaires);
 
         System.out.println("Schedule test: no constraints => " +
@@ -59,17 +64,19 @@ class BasicTests {
                 ((no_meet_constraints_schedule(sched)) ? "PASSED" : "FAILED"));
 
         System.out.println("Schedule test: 0 mins max span constraint => " +
-                ((no_max_duration_schedule(sched)) ? "PASSED" : "FAILED"));
+                ((no_max_duration_schedule(act_span, sched)) ? "PASSED" :
+                        "FAILED"));
 
         System.out.println("Schedule test: 1 year max span constraint => " +
-                ((max_duration_schedule(sched)) ? "PASSED" : "FAILED"));
+                ((max_duration_schedule(act_span, sched)) ? "PASSED" :
+                        "FAILED"));
 
 
     }
 
     private static boolean random_ok_constraints_schedule(Schedule sched) {
 
-        ArrayList<BinaryConstraint> constraints = new ArrayList<>();
+        Collection<Constraint> constraints = new ArrayList<>();
         ArrayList<Activity> activities = sched.get_sorted_activities();
         int n = activities.size();
         Random rand = new Random();
@@ -91,7 +98,7 @@ class BasicTests {
 
     private static boolean no_solution_schedule(Schedule sched) {
 
-        ArrayList<BinaryConstraint> constraints = new ArrayList<>();
+        Collection<Constraint> constraints = new ArrayList<>();
         ArrayList<Activity> activities = sched.get_sorted_activities();
         int n = activities.size();
         for (int i = 0; i < n; i++) {
@@ -103,14 +110,14 @@ class BasicTests {
     }
 
     private static boolean no_constraints_schedule(Schedule sched) {
-        ArrayList<BinaryConstraint> constraints = new ArrayList<>();
+        Collection<Constraint> constraints = new ArrayList<>();
 
         return sched.satisfies(constraints);
     }
 
     private static boolean meet_constraints_schedule(Schedule sched) {
 
-        ArrayList<BinaryConstraint> constraints = new ArrayList<>();
+        Collection<Constraint> constraints = new ArrayList<>();
         ArrayList<Activity> activities = sched.get_sorted_activities();
 
         constraints.add(
@@ -127,7 +134,7 @@ class BasicTests {
 
     private static boolean no_meet_constraints_schedule(Schedule sched) {
 
-        ArrayList<BinaryConstraint> constraints = new ArrayList<>();
+        Collection<Constraint> constraints = new ArrayList<>();
         ArrayList<Activity> activities = sched.get_sorted_activities();
 
         constraints.add(
@@ -142,11 +149,13 @@ class BasicTests {
         return !sched.satisfies(constraints);
     }
 
-    private static boolean no_max_duration_schedule(Schedule sched) {
-        return !new MaxSpanConstraint(0).isSatisfied(sched);
+    private static boolean no_max_duration_schedule(List<Activity> act,
+                                                    Schedule sched) {
+        return !new MaxSpanConstraint(act, 0).isSatisfied(sched);
     }
 
-    private static boolean max_duration_schedule(Schedule sched) {
-        return new MaxSpanConstraint(60 * 24 * 365).isSatisfied(sched);
+    private static boolean max_duration_schedule(List<Activity> act,
+                                                 Schedule sched) {
+        return new MaxSpanConstraint(act, 60 * 24 * 365).isSatisfied(sched);
     }
 }
