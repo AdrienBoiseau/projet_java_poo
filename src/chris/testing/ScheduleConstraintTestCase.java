@@ -1,19 +1,19 @@
 package chris.testing;
 
-import chris.activity.BinaryConstraint;
+import chris.activity.Constraint;
 import chris.activity.Schedule;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
 public class ScheduleConstraintTestCase {
 
     private final boolean expectedTo;
     private final Schedule schedule;
-    private final ArrayList<BinaryConstraint> constraints;
+    private final Collection<Constraint> constraints;
 
 
     public ScheduleConstraintTestCase(Schedule schedule,
-                                      ArrayList<BinaryConstraint>
+                                      Collection<Constraint>
                                               constraints, boolean result_expected) {
         this.expectedTo = result_expected;
         this.schedule = schedule;
