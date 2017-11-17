@@ -1,18 +1,16 @@
 package projet;
 
-import sun.tools.tree.BooleanExpression;
 
+import java.lang.Math;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+/**
+ *  Represent a timetable.
+ */
 public class Schedule {
-    /**
-     *  Represent a timetable.
-     *
-     * @TODO : private method "next (activities, constraints, scheduled)" which return the next activity to plan.
-     * @TODO : method "computeSchedule(activities, constraints)" which return a timetable with all activities planned & constraints respected.
-     */
+
     HashMap<Activity, Integer> schedule;
 
     public Schedule() {
@@ -26,14 +24,18 @@ public class Schedule {
     }
 
     public boolean satisfies(ArrayList<PrecedenceConstraint> listeContrainte) {
+        System.out.println(listeContrainte);
         for (PrecedenceConstraint constraint : listeContrainte) {
+            System.out.println(constraint.second);
             Activity before = constraint.first;
             Activity after = constraint.second;
             if (! constraint.isSatisfied(this.schedule.get(before),
                     this.schedule.get(after))){
                 return false;
             }
-        } return true;
+        }
+        return true;
+
     }
 
     public void add(Activity activity, int hour) {
@@ -103,12 +105,19 @@ public class Schedule {
 
     }
 
-    public void computeSchedule(ArrayList<Activity> activities, ArrayList<PrecedenceConstraint> constraints) {
+    public Schedule computeSchedule(ArrayList<Activity> activities, ArrayList<PrecedenceConstraint> constraints) {
+        Schedule res = new Schedule();
         ArrayList<Activity> scheduled = new ArrayList<>();
-        Activity nextActivity = next(activities, constraints, scheduled);
+        Activity nextActivity;
+        nextActivity = next(activities, constraints, scheduled);
+        int h = 8;
         while (nextActivity != null) {
-
+            res.add(nextActivity,h);
+            scheduled.add(nextActivity);
+            h += Math.round(nextActivity.duration/60)+1;
+            nextActivity = next(activities,constraints,scheduled);
         }
+        return res;
     }
 
 }

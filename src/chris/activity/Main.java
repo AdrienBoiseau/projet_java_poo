@@ -1,22 +1,46 @@
 package chris.activity;
 
-import chris.testing.ConstraintTestCase;
-import chris.testing.ScheduleConstraintTestCase;
+import chris.schedule.ScheduleReader;
 import chris.testing.TestFramework;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
     static SimpleDateFormat sdf = new SimpleDateFormat("d MMM yyyy hh:mm aaa");
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        // Get the data files in memory
+        String ACTIVITY_PATH = "data/activities.txt";
+        String PRECEDENCE_PATH = "data/precedence.txt";
+        String MEET_PATH = "data/meet_precedence.txt";
+        String MAX_SPAN_PATH = "data/max_span_precedence.txt";
+
+        // get the activities
+
+        ScheduleReader reader = new ScheduleReader();
+        Map<String, Activity> activities = reader.readActivities(ACTIVITY_PATH);
+
+        // get the constraints
+
+        Collection<PrecedenceConstraint> constraints = reader.readPrecedence
+                (PRECEDENCE_PATH, activities);
+
+        // Calculate a schedule
+
+        Schedule sched = Schedule.computeSchedule(activities.values(), constraints);
+
+        // Show the schedule
+
+        System.out.println(sched.toString());
+
 
         //TP2();
-        TP3();
+        //TP3();
 
     }
 
@@ -49,135 +73,6 @@ public class Main {
     }
 
     static private void TP3() {
-        // Objets
-        Activity options = new Activity("Choisir mes options", 70);
-        Activity ip = new Activity("Inscription pédagogique", 30);
-        PrecedenceConstraint contrainte = new PrecedenceConstraint(options, ip);
-
-        PrecedenceConstraintWithDuration contrainte_with_duration = new PrecedenceConstraintWithDuration(options,
-                ip,
-                0,
-                120);
-        GregorianCalendar date_1 = new GregorianCalendar(2012, 11, 31, 9, 0, 0);
-        GregorianCalendar date_2 = new GregorianCalendar(2012, 11, 31, 10, 0, 0);
-        GregorianCalendar date_3 = new GregorianCalendar(2012, 11, 31, 11, 0, 0);
-
-// Test avec une programmation censée satisfaire la contrainte
-        if (!contrainte.isSatisfied(date_1, date_3)) {
-            System.out.println("Mon programme ne marche pas.");
-            System.out.println("Il aurait dû trouver que la contrainte est satisfaite.");
-        } else {
-            System.out.println("Mon programme passe le premier test avec succès.");
-        }
-
-// Test avec une programmation censée ne pas satisfaire la contrainte
-        if (contrainte.isSatisfied(date_2, date_1)) {
-            System.out.println("Mon programme ne marche pas.");
-            System.out.println("Il aurait dû trouver que la contrainte n'est pas satisfaite.");
-        } else {
-            System.out.println("Mon programme passe le deuxième test avec succès.");
-        }
-
-// Test avec une programmation censée ne pas satisfaire la contrainte (car la première
-// activité finirait après le début de la seconde)
-        if (contrainte.isSatisfied(date_1, date_2)) {
-            System.out.println("Mon programme ne marche pas.");
-            System.out.println("Il aurait dû trouver que la contrainte n'est pas satisfaite.");
-        } else {
-            System.out.println("Mon programme passe le troisième test avec succès.");
-        }
-
-        if (!contrainte_with_duration.isSatisfied(date_1, date_3)) {
-            System.out.println("Mon programme ne marche pas.");
-            System.out.println("Il aurait dû trouver que la contrainte est satisfaite.");
-        } else {
-            System.out.println("Mon programme passe le premier test avec succès.");
-        }
-
-// Test avec une programmation censée ne pas satisfaire la contrainte
-        if (contrainte_with_duration.isSatisfied(date_2, date_1)) {
-            System.out.println("Mon programme ne marche pas.");
-            System.out.println("Il aurait dû trouver que la contrainte n'est pas satisfaite.");
-        } else {
-            System.out.println("Mon programme passe le deuxième test avec succès.");
-        }
-
-// Test avec une programmation censée ne pas satisfaire la contrainte (car la première
-// activité finirait après le début de la seconde)
-        if (contrainte_with_duration.isSatisfied(date_1, date_2)) {
-            System.out.println("Mon programme ne marche pas.");
-            System.out.println("Il aurait dû trouver que la contrainte n'est pas satisfaite.");
-        } else {
-            System.out.println("Mon programme passe le troisième test avec succès.");
-        }
-
-        //b SCHEDULE
-
-        Activity act_a = new Activity("a", 60);
-        Activity act_b = new Activity("b", 60);
-        Activity act_c = new Activity("c", 120);
-
-        GregorianCalendar date_a = new GregorianCalendar(2012, 11, 31, 9, 0, 0);
-        GregorianCalendar date_b = new GregorianCalendar(2012, 11, 31, 10, 0, 0);
-        GregorianCalendar date_c = new GregorianCalendar(2012, 11, 31, 11, 0, 0);
-
-        HashMap<Activity, GregorianCalendar> horaires = new HashMap<>();
-        horaires.put(act_a, date_a);
-        horaires.put(act_b, date_b);
-        horaires.put(act_c, date_c);
-
-        Schedule sched = new Schedule(horaires);
-
-        ArrayList<BinaryConstraint> cons_true = new ArrayList<>();
-
-        cons_true.add(new PrecedenceConstraint(act_a, act_b));
-        cons_true.add(new PrecedenceConstraint(act_a, act_c));
-        cons_true.add(new PrecedenceConstraint(act_b, act_c));
-
-        System.out.println(sched.satisfies(cons_true));
-        System.out.println(sched.toString());
-
-
-        ArrayList<BinaryConstraint> cons_false = new ArrayList<>();
-
-        cons_false.add(new PrecedenceConstraint(act_a, act_b));
-        cons_false.add(new PrecedenceConstraint(act_a, act_c));
-        cons_false.add(new PrecedenceConstraint(act_c, act_a));
-
-        System.out.println(sched.satisfies(cons_false));
-        System.out.println(sched.toString());
-
-        ArrayList<Activity> activities = new ArrayList<>();
-        activities.add(act_a);
-        activities.add(act_b);
-        activities.add(act_c);
-
-        Schedule s_true = Schedule.computeSchedule(activities, cons_true);
-        print(String.valueOf(s_true));
-
-        Schedule s_false = Schedule.computeSchedule(activities, cons_false);
-        print(String.valueOf(s_false));
-
-
-        TestFramework.run_schedule_constraints_test(
-                new ScheduleConstraintTestCase(
-                        sched,
-                        cons_true,
-                        true));
-
-        TestFramework.run_schedule_constraints_test(
-                new ScheduleConstraintTestCase(
-                        sched,
-                        cons_false,
-                        false));
-
-
-        TestFramework.run_constraint_test(
-                new ConstraintTestCase(
-                        new PrecedenceConstraint(act_a, act_b),
-                        date_1,
-                        date_2,
-                        true));
 
         TestFramework.run_basic_tests();
 

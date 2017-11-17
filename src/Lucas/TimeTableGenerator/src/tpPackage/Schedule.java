@@ -3,13 +3,18 @@ package tpPackage;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
+import java.lang.Math;
 
 public class Schedule {
 	
-	protected HashMap<Activity,Integer> hmap = new HashMap<>();
+	protected HashMap<Activity,Integer> hmap;
 	
-	public Schedule(HashMap<Activity,Integer> hmap) {
-		this.hmap = hmap;
+	public Schedule() {
+		this.hmap = new HashMap<>();
+	}
+	
+	public void add(Activity activity, int a){
+		this.hmap.put(activity, a);
 	}
 	
 	public boolean satisfies(ArrayList<PrecedenceConstraint> contrainte) {
@@ -46,12 +51,39 @@ public class Schedule {
 		return res;
 	}
 	
+	private Activity next(ArrayList<Activity> activities, ArrayList<PrecedenceConstraint> constraints, ArrayList<Activity> scheduled){
+		for (Activity act : activities){
+			if (!scheduled.contains(act)){
+				for(PrecedenceConstraint cons : constraints){
+					if (cons.second == act){
+						if (scheduled.contains(cons.first)){
+							return act;
+						}
+						break;
+					}
+				}
+			}
+		}
+		return null;
+	}
+	
+	public Schedule compteSchedule(ArrayList<Activity> activities, ArrayList<PrecedenceConstraint> constraints){
+		ArrayList<Activity> scheduled = new ArrayList<>();
+		Schedule sch = new Schedule();
+		int hour = 8;
+		while(next(activities,constraints,scheduled)!=null){
+			Activity act = next(activities,constraints,scheduled);
+			sch.add(act, hour);
+			hour += Math.round(act.duree / 60)+1;
+		}
+		return sch;
+	}
+	
 	@Override
 	public String toString(){
 		ArrayList<Activity> liste = get_sorted_activity();
 		String res = "";
 		for (int i = 0; i<liste.size(); i++) {
-			System.out.println(liste.get(i));
 			res =res + " " + liste.get(i).description + " : " + this.hmap.get(liste.get(i)) + " h ; ";
 		}
 		res = "[ " + res + " ]";

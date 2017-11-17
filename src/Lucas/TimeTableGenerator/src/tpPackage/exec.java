@@ -142,12 +142,13 @@ public class exec {
 		int dix = 10;
 		int midi = 12;
 		int quatorze = 14;
-		hmapcontr.put(math,neuf);
-		hmapcontr.put(poo,dix);
-		hmapcontr.put(te,midi);
-		hmapcontr.put(ang,quatorze);
 		
-		Schedule emploitdutemps = new Schedule(hmapcontr);
+		Schedule emploitdutemps = new Schedule();
+		
+		emploitdutemps.add(math,neuf);
+		emploitdutemps.add(poo,dix);
+		emploitdutemps.add(te,midi);
+		emploitdutemps.add(ang,quatorze);
 		
 		if (emploitdutemps.satisfies(touteslescontraintes)) {
 			System.out.println("Mon programme passe le premier test");
