@@ -9,7 +9,10 @@ public class Main {
 		Activity options = new Activity ("Choisir mes options", 120);
 		Activity ip = new Activity ("Inscription pédagogique", 60);
 		Activity poo = new Activity ("Programmation Orientée Objet", 180);
+		Activity python = new Activity ("Python", 120);
+
 		PrecedenceConstraint contrainte = new PrecedenceConstraint (options, ip);
+		MeetConstraint meetConstraint = new MeetConstraint(poo, python);
 		int neufHeures = 9;
 		int dixHeures = 7;
 		int onzeHeures = 11;
@@ -76,8 +79,9 @@ public class Main {
 		
 	    HashMap<Activity, Integer> map = new HashMap<>();
 	    map.put(options, 8);
-	    map.put(ip, 12);
+	    map.put(ip, 9);
 	    map.put(poo, 10);
+	    map.put(python, 13);
 
 	    Schedule schedule = new Schedule(map);
 	    
@@ -96,5 +100,8 @@ public class Main {
 
 	    //System.out.println(schedule.next(schedule.getSortedActivities(), listOfConstraints, planified));
 	    System.out.println(schedule.computeSchedule(schedule.getSortedActivities(), listOfConstraints));
+	    //System.out.println(contrainte.isSatisfied(schedule));
+	    System.out.println(meetConstraint.isSatisfied(schedule));
+
 	}
 }

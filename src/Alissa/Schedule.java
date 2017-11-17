@@ -13,7 +13,6 @@ public class Schedule {
 	}
 	
 	private Schedule(){
-		
 	}
 	
 	public HashMap<Activity, Integer> getEdt() {
