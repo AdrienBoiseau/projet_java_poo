@@ -5,24 +5,15 @@ import java.util.GregorianCalendar;
 
 public class Main {
     public static void main(String[] args) {
+        long debut = System.currentTimeMillis();
         //testTimeSlot();
         //testPrecedenceConstraint();
-        testShedule();
-        //test();
+        //testSchedule();
+        testSchedule2(5000);
+        System.out.println("Fin. Durée : " + (System.currentTimeMillis()-debut));
+
     }
 
-    private static void test() {
-        ArrayList<Integer> list = new ArrayList<Integer>();
-        list.add(0);
-        list.add(1);
-        list.add(2);
-
-        System.out.println(list);
-
-        list.add(3,3);
-
-        System.out.println(list);
-    }
 
     private static void testTimeSlot() {
         System.out.println("Début des tests sur la classe TimeSlot");
@@ -103,7 +94,7 @@ public class Main {
 
     }
 
-    private static void testShedule() {
+    private static void testSchedule() {
         // Activités
         Activity activite1 = new Activity("CM",60);
         Activity activite2 = new Activity("TP",60);
@@ -136,5 +127,22 @@ public class Main {
             System.out.println("Mon programme ne passe pas le premier test");
         }
         System.out.println("Mon emploi du temps : " + emploiDuTemps);
+    }
+
+    private static void testSchedule2(int n) {
+        ArrayList<Activity> activities = new ArrayList<>();
+        for (int i=0 ; i<n ; i++) {
+            activities.add(new Activity("Activity"+i,1));
+        }
+        
+        ArrayList<PrecedenceConstraint> constraints = new ArrayList<>();
+        for (int i=n ; i>1 ; i--) {
+            //System.out.println(i);
+            constraints.add(new PrecedenceConstraint(activities.get(i-2),activities.get(i-1)));
+        }
+
+        Schedule test = new Schedule();
+        test = test.computeSchedule(activities,constraints);
+
     }
 }
