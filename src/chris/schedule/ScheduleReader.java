@@ -15,31 +15,42 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ScheduleReader {
-    ScheduleReader() {
+    public ScheduleReader() {
     }
 
     public Map<String, Activity> readActivities(String filename) throws IOException {
-        BufferedReader file = new BufferedReader(new FileReader(filename));
-        IdStringStringReader activityReader = new IdStringStringReader(file,
-                "=",
-                "_lasting_");
+        BufferedReader file =
+                new BufferedReader(
+                        new FileReader(
+                                filename));
+        IdStringStringReader activityReader =
+                new IdStringStringReader(
+                        file,
+                        "=",
+                        "_lasting_");
 
         HashMap<String, Activity> activities = new HashMap<>();
 
-        for (Map.Entry<String, OrderedPair<String, String>> strings : activityReader.readAll().entrySet()) {
+        for (Map.Entry<String, OrderedPair<String, String>> strings
+                : activityReader.readAll().entrySet()) {
             String id = strings.getKey();
             OrderedPair<String, String> activityStrings = strings.getValue();
             String description = activityStrings.getFirst();
-            int duration = Integer.parseInt(activityStrings.getSecond());
-            activities.put(id, new Activity(description, duration));
+            int duration =
+                    Integer.parseInt(
+                            activityStrings.getSecond());
+            activities.put(
+                    id,
+                    new Activity(
+                            description,
+                            duration));
         }
         return activities;
     }
 
     public ArrayList<PrecedenceConstraint> readPrecedence(String filename,
                                                           Map<String,
-                                                                  Activity>
-                                                                  act
+                                                                  Activity> act
     ) throws
             IOException {
         BufferedReader file = new BufferedReader(new FileReader(filename));
@@ -61,4 +72,15 @@ public class ScheduleReader {
         }
         return precedence;
     }
+
+    /*
+    nom = description _lasting_ durée
+    => Id = String1 _lasting_ String2
+    ==> Ordered Pair = [key: id, first:String1, second:String2]
+    => getFirst() = String1
+    => getSecond() = String2
+
+
+     */
+
 }
