@@ -5,22 +5,23 @@ import java.util.GregorianCalendar;
 
 import static chris.activity.Main.sdf;
 
-class PrecedenceConstraintWithDuration extends PrecedenceConstraint {
+public class PrecedenceConstraintWithDuration extends PrecedenceConstraint implements Constraint {
 
-    int pause_min = 0;
-    int pause_max = 0;
+    private int pause_min = 0;
+    private int pause_max = 0;
 
 
-    PrecedenceConstraintWithDuration(Activity a1, Activity a2, int pause_min, int pause_max) {
-        super(a1, a2);
+    PrecedenceConstraintWithDuration(Activity f, Activity s, int pause_min,
+                                     int pause_max) {
+        super(f, s);
         //pause en minutes
         this.pause_min = pause_min;
         this.pause_max = pause_max;
     }
 
 
-    protected boolean isSatisfied(GregorianCalendar d,
-                                  GregorianCalendar next_date) {
+    public boolean isSatisfied(GregorianCalendar d,
+                               GregorianCalendar next_date) {
         GregorianCalendar date = (GregorianCalendar) d.clone();
         date.add(Calendar.MINUTE, first.duration);
         GregorianCalendar lim_min = (GregorianCalendar) next_date.clone();
@@ -29,11 +30,14 @@ class PrecedenceConstraintWithDuration extends PrecedenceConstraint {
         GregorianCalendar lim_max = (GregorianCalendar) next_date.clone();
         lim_max.add(Calendar.MINUTE, -this.pause_max);
 
-        System.out.println(sdf.format(lim_max.getTime()) + " <= " + sdf.format(date.getTime()) + " <= " + sdf.format(lim_min.getTime()) + " ? ");
+        System.out.println(sdf.format(
+                lim_max.getTime()) +
+                " <= " +
+                sdf.format(date.getTime()) +
+                " <= " +
+                sdf.format(lim_min.getTime()) +
+                " ? ");
 
         return is_equal_or_less(lim_max, date) & is_equal_or_less(date, lim_min);
     }
-
-
-
 }
