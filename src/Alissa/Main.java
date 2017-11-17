@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -5,7 +6,7 @@ import java.util.Map;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NumberFormatException, IOException {
 		Activity options = new Activity ("Choisir mes options", 120);
 		Activity ip = new Activity ("Inscription pédagogique", 60);
 		Activity poo = new Activity ("Programmation Orientée Objet", 180);
@@ -94,14 +95,19 @@ public class Main {
 	    listOfConstraints.add(new PrecedenceConstraint(options, poo));
 	    //System.out.println(schedule.satisfies(listOfConstraints));
 
-	    //System.out.println(schedule.getSortedActivities());
+	    System.out.println(schedule.getSortedActivities());
 	    //System.out.println(schedule.toString());
 	    ArrayList<Activity> planified = new ArrayList<>();
 
 	    //System.out.println(schedule.next(schedule.getSortedActivities(), listOfConstraints, planified));
 	    System.out.println(schedule.computeSchedule(schedule.getSortedActivities(), listOfConstraints));
 	    //System.out.println(contrainte.isSatisfied(schedule));
-	    System.out.println(meetConstraint.isSatisfied(schedule));
+	    //System.out.println(meetConstraint.isSatisfied(schedule));
+		MaxSpanConstraint maxSpanConstraint = new MaxSpanConstraint(620, schedule.getSortedActivities());
+	    //System.out.println(maxSpanConstraint.isSatisfied(schedule));
+		ScheduleReader scheduleReader = new ScheduleReader();
+		//System.out.println(scheduleReader.readActivities("data/activities"));
+		System.out.println(scheduleReader.readPrecedenceConstraint("data/precedence", scheduleReader.readActivities("data/activities")));
 
 	}
 }

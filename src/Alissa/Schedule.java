@@ -60,12 +60,12 @@ public class Schedule {
 		return res;
 	}
 	
-	private Activity next(ArrayList<Activity> activities, ArrayList<PrecedenceConstraint> constraints, Set<Activity> scheduled){
+	private Activity next(ArrayList<Activity> activities, ArrayList<PrecedenceConstraint> constraints, Set<Activity> set){
 		for(Activity activity : activities) {
-			if(!scheduled.contains(activity)){
+			if(!set.contains(activity)){
 				boolean isOk = true;
 				for(PrecedenceConstraint prec : constraints) {
-					if(prec.second.equals(activity) && !scheduled.contains(prec.first)){
+					if(prec.second.equals(activity) && !set.contains(prec.first)){
 						isOk = false;
 						break;
 					}

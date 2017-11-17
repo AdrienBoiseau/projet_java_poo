@@ -1,21 +1,20 @@
+import java.util.ArrayList;
+
 public class MaxSpanConstraint implements Constraint{
 
 	private int timer;
+	private ArrayList<Activity> activity;
 	
-	public MaxSpanConstraint(int timer) {
+	public MaxSpanConstraint(int timer, ArrayList<Activity> activity) {
 		this.timer = timer;
-	}
-
-	@Override
-	public boolean isSatisfied(Schedule schedule) {
-		// TODO Auto-generated method stub
-		return false;
+		this.activity = activity;
 	}
 	
-	/*public boolean isSatisfied(Schedule schedule) {
-		if(first.getDuree() + min <= date2*60){
-			return true;
+	public boolean isSatisfied(Schedule schedule) {
+		int duree = 0;
+		for(Activity act : activity){
+			duree += act.duree;
 		}
-		return false;
-	}*/
+		return duree <= timer;
+	}
 }
