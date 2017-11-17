@@ -1,4 +1,4 @@
-public class PrecedenceConstraintWithDuration extends PrecedenceConstraint{
+public class PrecedenceConstraintWithDuration extends PrecedenceConstraint implements Constraint{
 
 	private int min;
 	private int max;
