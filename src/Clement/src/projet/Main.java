@@ -2,6 +2,7 @@ package projet;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -9,7 +10,8 @@ public class Main {
         //testTimeSlot();
         //testPrecedenceConstraint();
         //testSchedule();
-        testSchedule2(5000);
+        //testSchedule2(5000);
+        testAbstract();
         System.out.println("Fin. Durée : " + (System.currentTimeMillis()-debut));
 
     }
@@ -144,5 +146,36 @@ public class Main {
         Schedule test = new Schedule();
         test = test.computeSchedule(activities,constraints);
 
+    }
+
+    private static void testAbstract() {
+        ArrayList<Activity> activities = new ArrayList<>();
+        Activity activity1 = new Activity("First",1);
+        Activity activity2 = new Activity("Second",1);
+        Activity activity3 = new Activity("Third",1);
+        Activity activity4 = new Activity("Fourth",1);
+        activities.add(activity1);
+        activities.add(activity2);
+        activities.add(activity3);
+        activities.add(activity4);
+
+        List<Constraint> constraints = new ArrayList<>();
+
+        // Constraint : Activity1 must be plan before Activity2.
+        constraints.add(new PrecedenceConstraint(activity1,activity2));
+
+        // Constraint : Activity4 must be plan just when Activity3 finished.
+        constraints.add(new MeetConstraint(activity3,activity4));
+
+        // Constraint : Activity1, Activity2 and Activity3 must be all finished in 90 minutes or less.
+        ArrayList<Activity> set = new ArrayList<>();
+        set.add(activity1);
+        set.add(activity2);
+        set.add(activity3);
+        MaxSpanConstraint setConstraint = new MaxSpanConstraint(set,90);
+        constraints.add(setConstraint);
+
+        Schedule emploiDuTemps = new Schedule();
+        emploiDuTemps = emploiDuTemps.computeSchedule(activities,constraints);
     }
 }
