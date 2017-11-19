@@ -10,8 +10,8 @@ public class Main {
         //testTimeSlot();
         //testPrecedenceConstraint();
         //testSchedule();
-        //testSchedule2(5000);
-        testAbstract();
+        //testSchedule2(50);
+        //testAbstract();
         System.out.println("Fin. Durée : " + (System.currentTimeMillis()-debut));
 
     }
@@ -137,7 +137,7 @@ public class Main {
             activities.add(new Activity("Activity"+i,1));
         }
         
-        ArrayList<PrecedenceConstraint> constraints = new ArrayList<>();
+        ArrayList<BinaryConstraint> constraints = new ArrayList<>();
         for (int i=n ; i>1 ; i--) {
             //System.out.println(i);
             constraints.add(new PrecedenceConstraint(activities.get(i-2),activities.get(i-1)));
@@ -159,7 +159,7 @@ public class Main {
         activities.add(activity3);
         activities.add(activity4);
 
-        List<Constraint> constraints = new ArrayList<>();
+        ArrayList<BinaryConstraint> constraints = new ArrayList<>();
 
         // Constraint : Activity1 must be plan before Activity2.
         constraints.add(new PrecedenceConstraint(activity1,activity2));
