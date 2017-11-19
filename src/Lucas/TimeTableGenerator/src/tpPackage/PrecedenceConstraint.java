@@ -1,13 +1,10 @@
 package tpPackage;
 
-public class PrecedenceConstraint {
+public class PrecedenceConstraint extends BinaryConstraint implements Constraint{
 	
-	protected Activity first;
-	protected Activity second;
 	
 	public PrecedenceConstraint(Activity first, Activity second) {
-		this.first = first;
-		this.second = second;
+		super(first, second);
 	}
 	
 	public boolean isSatisfied(int date1, int date2) {

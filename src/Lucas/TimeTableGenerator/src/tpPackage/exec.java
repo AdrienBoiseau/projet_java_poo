@@ -121,6 +121,9 @@ public class exec {
 		
 		*/
 		
+		// Schedule
+		
+		/*
 		Activity math = new Activity ("math", 50);
 		Activity poo = new Activity ("poo", 120);
 		Activity te = new Activity ("te", 60);
@@ -196,6 +199,8 @@ public class exec {
 		}
 		
 		System.out.println("Emploi du temps : " + emploitdutemps);
+		*/
+		
 		
 	}
 }
