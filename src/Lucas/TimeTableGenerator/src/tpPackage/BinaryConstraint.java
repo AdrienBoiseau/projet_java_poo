@@ -1,15 +1,23 @@
 package tpPackage;
 
-abstract class BinaryConstraint {
+abstract class BinaryConstraint implements Constraint{
 	
 	protected Activity first;
 	protected Activity second;
 	
-	abstract boolean isSatisfied(int date1,int date2);
+	public BinaryConstraint(Activity first,Activity second) {
+		this.first = first;
+		this.second = second;
+	}
 	
-	public void isSatisfied(Schedule schedule){
+	abstract boolean isSatisfied(int date1,int date2);
+
+	
+	public boolean isSatisfied(Schedule schedule){
 		int date1 = schedule.hmap.get(this.first);
 		int date2 = schedule.hmap.get(this.second);
-		isSatisfied(date1,date2);
+		return isSatisfied(date1,date2);
 	}
+	
+	
 }

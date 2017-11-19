@@ -54,27 +54,33 @@ public class Schedule {
 	private Activity next(ArrayList<Activity> activities, ArrayList<PrecedenceConstraint> constraints, ArrayList<Activity> scheduled){
 		for (Activity act : activities){
 			if (!scheduled.contains(act)){
+				Activity next = act;
 				for(PrecedenceConstraint cons : constraints){
 					if (cons.second == act){
-						if (scheduled.contains(cons.first)){
-							return act;
+						if (!scheduled.contains(cons.first)){
+							next = null;
+							break;
 						}
-						break;
 					}
+				}
+				if (next != null) {
+					return act;
 				}
 			}
 		}
 		return null;
 	}
 	
-	public Schedule compteSchedule(ArrayList<Activity> activities, ArrayList<PrecedenceConstraint> constraints){
+	public Schedule computeSchedule(ArrayList<Activity> activities, ArrayList<PrecedenceConstraint> constraints){
 		ArrayList<Activity> scheduled = new ArrayList<>();
 		Schedule sch = new Schedule();
+		Activity act = next(activities,constraints,scheduled);
 		int hour = 8;
-		while(next(activities,constraints,scheduled)!=null){
-			Activity act = next(activities,constraints,scheduled);
+		while(act!=null){
+			scheduled.add(act);
 			sch.add(act, hour);
 			hour += Math.round(act.duree / 60)+1;
+			act = next(activities,constraints,scheduled);
 		}
 		return sch;
 	}
