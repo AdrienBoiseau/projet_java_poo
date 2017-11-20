@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
 import java.lang.Math;
+import java.util.Collection;
 
 public class Schedule {
 	
@@ -17,9 +18,9 @@ public class Schedule {
 		this.hmap.put(activity, a);
 	}
 	
-	public boolean satisfies(ArrayList<PrecedenceConstraint> contrainte) {
-		for (PrecedenceConstraint cont : contrainte) {
-			if (!(cont.isSatisfied(this.hmap.get(cont.first),this.hmap.get(cont.second)))) {
+	public boolean satisfies(Collection<? extends Constraint> contrainte) {
+		for (Constraint cont : contrainte) {
+			if (!cont.isSatisfied(this)) {
 				return false;
 			}
 		}
@@ -51,11 +52,11 @@ public class Schedule {
 		return res;
 	}
 	
-	private Activity next(ArrayList<Activity> activities, ArrayList<PrecedenceConstraint> constraints, ArrayList<Activity> scheduled){
+	private Activity next(Collection<Activity> activities, Collection<? extends BinaryConstraint> constraints, Collection<Activity> scheduled){
 		for (Activity act : activities){
 			if (!scheduled.contains(act)){
 				Activity next = act;
-				for(PrecedenceConstraint cons : constraints){
+				for(BinaryConstraint cons : constraints){
 					if (cons.second == act){
 						if (!scheduled.contains(cons.first)){
 							next = null;
@@ -71,7 +72,7 @@ public class Schedule {
 		return null;
 	}
 	
-	public Schedule computeSchedule(ArrayList<Activity> activities, ArrayList<PrecedenceConstraint> constraints){
+	public Schedule computeSchedule(Collection<Activity> activities, Collection<? extends BinaryConstraint> constraints){
 		ArrayList<Activity> scheduled = new ArrayList<>();
 		Schedule sch = new Schedule();
 		Activity act = next(activities,constraints,scheduled);

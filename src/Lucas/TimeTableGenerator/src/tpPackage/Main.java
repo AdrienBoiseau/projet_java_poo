@@ -4,10 +4,12 @@ import java.util.GregorianCalendar;
 import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.io.IOException;
 
 public class Main {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		System.out.println("Test de timeSlot" + "\n");
 		testTimeSlot();
 		System.out.println("\n" + "Test de PrecedenceConstraint" + "\n");
@@ -18,6 +20,10 @@ public class Main {
 		testSchedule();
 		System.out.println("\n" + "Test de compteSchedule" + "\n");
 		testSchedulepart2();
+		System.out.println("\n" + "Test de classe abstraite et interface" + "\n");
+		testBinaryConstraint();
+		System.out.println("\n" + "Test de ScheduleReader" + "\n");
+		testScheduleReader();
     }
 	
 	public static void testTimeSlot() {
@@ -232,7 +238,7 @@ public class Main {
 		PrecedenceConstraint contrainte2 = new PrecedenceConstraint (poo,te);
 		PrecedenceConstraint contrainte3 = new PrecedenceConstraint(te,ang);
 		
-		ArrayList<PrecedenceConstraint> touteslescontraintes = new ArrayList<>();
+		ArrayList<BinaryConstraint> touteslescontraintes = new ArrayList<>();
 		
 		touteslescontraintes.add(contrainte1);
 		touteslescontraintes.add(contrainte2);
@@ -266,7 +272,7 @@ public class Main {
 			activities.add(new Activity("activity"+i,1));
 		}
 		
-		ArrayList<PrecedenceConstraint> constraints = new ArrayList<>();
+		ArrayList<BinaryConstraint> constraints = new ArrayList<>();
 		
 		for (int i = 10 ; i>1 ; i--) {
 			constraints.add(new PrecedenceConstraint(activities.get(i-2), activities.get(i-1)));
@@ -277,7 +283,7 @@ public class Main {
 	}
 	
 	public static void testBinaryConstraint() {
-		ArrayList<Constraint> contraintes = new ArrayList<> ();
+		ArrayList<BinaryConstraint> contraintes = new ArrayList<> ();
 		ArrayList<Activity> activities = new ArrayList<>();
 		Activity activity1 = new Activity("first",1);
 		Activity activity2 = new Activity("second",1);
@@ -301,8 +307,8 @@ public class Main {
 		ensemble.add(activity1);
 		ensemble.add(activity2);
 		ensemble.add(activity3);
-		MaxSpanConstraint contrainteEnsemble = new MaxSpanConstraint(ensemble, 90);
-		contraintes.add(contrainteEnsemble);
+		//MaxSpanConstraint contrainteEnsemble = new MaxSpanConstraint(ensemble, 90);
+		//contraintes.add(contrainteEnsemble);
 
 		Schedule emploiDuTemps = new Schedule ();
 		
@@ -310,5 +316,16 @@ public class Main {
 
 		System.out.println("L'emploi du temps satisfait-il toutes les contraintes ? ");
 		System.out.println(emploiDuTemps.satisfies(contraintes));
+	}
+	
+	public static void testScheduleReader() throws IOException {
+		ScheduleReader read = new ScheduleReader();
+		String ACTIVITY_PATH = "testreader1.txt";
+		String PRECEDENCE_PATH = "testreader2.txt";
+		Map<String, Activity> activities = read.readActivities(ACTIVITY_PATH);
+		ArrayList<PrecedenceConstraint> constraints = read.readPrecedenceConstraint(PRECEDENCE_PATH, activities);
+		Schedule sch = new Schedule();
+		sch = sch.computeSchedule(activities.values(), constraints);
+		System.out.println(sch);
 	}
 }
