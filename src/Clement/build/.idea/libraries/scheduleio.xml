@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="scheduleio">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/scheduleio.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

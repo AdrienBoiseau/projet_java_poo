@@ -3,6 +3,7 @@ package projet;
 
 import java.lang.Math;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -23,10 +24,8 @@ public class Schedule {
         this.schedule = new HashMap();
     }
 
-    public boolean satisfies(ArrayList<BinaryConstraint> listeContrainte) {
-        System.out.println(listeContrainte);
-        for (BinaryConstraint constraint : listeContrainte) {
-            System.out.println(constraint.second);
+    public boolean satisfies(Collection<BinaryConstraint> constraints) {
+        for (BinaryConstraint constraint : constraints) {
             Activity before = constraint.first;
             Activity after = constraint.second;
             if (! constraint.isSatisfied(this.schedule.get(before),
@@ -79,7 +78,9 @@ public class Schedule {
         return str;
     }
 
-    private Activity next(ArrayList<Activity> activities, ArrayList<BinaryConstraint> constraints, ArrayList<Activity> scheduled) {
+    private Activity next(ArrayList<Activity> activities,
+                          Collection<BinaryConstraint> constraints,
+                          ArrayList<Activity> scheduled) {
         for (Activity activity : activities) {
             if (! scheduled.contains(activity)) {
                 boolean underConstraint = false;
@@ -105,7 +106,8 @@ public class Schedule {
 
     }
 
-    public Schedule computeSchedule(ArrayList<Activity> activities, ArrayList<BinaryConstraint> constraints) {
+    public Schedule computeSchedule(ArrayList<Activity> activities,
+                                    Collection<BinaryConstraint> constraints) {
         Schedule res = new Schedule();
         ArrayList<Activity> scheduled = new ArrayList<>();
         Activity nextActivity;
