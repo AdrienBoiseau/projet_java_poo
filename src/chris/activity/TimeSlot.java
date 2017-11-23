@@ -29,17 +29,10 @@ class TimeSlot {
                 is_date_between(t1.getEnd(), t2.getBegin(), t2.getEnd()));
     }
 
-    static private boolean is_equal_or_less(GregorianCalendar date,
-                                            GregorianCalendar limit) {
-        return (date.get(Calendar.YEAR) <= limit.get(Calendar.YEAR) &
-                date.get(Calendar.DAY_OF_YEAR) <= limit.get(Calendar.DAY_OF_YEAR) &
-                date.get(Calendar.HOUR_OF_DAY) <= limit.get(Calendar.HOUR_OF_DAY));
-    }
-
     static private boolean is_date_between(GregorianCalendar date,
                                            GregorianCalendar inf_lim,
                                            GregorianCalendar sup_lim) {
-        return is_equal_or_less(inf_lim, date) & is_equal_or_less(date, sup_lim);
+        return inf_lim.compareTo(date) <= 0 & date.compareTo(sup_lim) <= 0;
     }
 
     String get_repr() {
