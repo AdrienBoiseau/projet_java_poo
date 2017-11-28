@@ -14,7 +14,14 @@ public class ScheduleReader {
 		public ScheduleReader(){
 			
 		}
-		
+
+	/**
+	 * Méthode retournant une "Map" avec pour clefs les identifiants donnés dans le fichier
+	 * @param filename Nom de fichier
+	 * @return map (map avec les identifiants donnés dans le fichier)
+	 * @throws NumberFormatException Exception dû au format des nombres
+	 * @throws IOException
+	 */
 		public Map<String, Activity> readActivities(String filename) throws NumberFormatException, IOException{
 			BufferedReader fileReader = new BufferedReader (new FileReader (filename));
 			HashMap <String, Activity> activities = new HashMap<>(); 
@@ -33,7 +40,14 @@ public class ScheduleReader {
 			}
 			return activities; 
 		}
-		
+
+	/**
+	 * Méthode permettant de les contraintes d'une liste d'activités et d'un fichier
+	 * @param filename Nom du fichier
+	 * @param activities Listes d'activités
+	 * @return precedenceConstraints (contraintes)
+	 * @throws IOException
+	 */
 		public ArrayList<PrecedenceConstraint> readPrecedenceConstraint(String filename, Map<String, Activity> activities) throws IOException{
 			BufferedReader fileReader = new BufferedReader (new FileReader (filename));
 			ArrayList <PrecedenceConstraint> precedenceConstraints = new ArrayList<>(); 
