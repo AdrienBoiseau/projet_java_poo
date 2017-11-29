@@ -2,7 +2,7 @@ package projet;
 
 import java.util.ArrayList;
 
-public class MaxSpanConstraint extends BinaryConstraint {
+public class MaxSpanConstraint extends BinaryConstraint implements Constraint{
     ArrayList<Activity> activities;
     int maxDuration;
 

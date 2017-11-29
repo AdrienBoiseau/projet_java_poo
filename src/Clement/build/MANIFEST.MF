@@ -1,0 +1,2 @@
+Main-Class: projet.Main
+Class-Path: scheduleio.jar

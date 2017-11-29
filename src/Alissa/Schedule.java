@@ -4,8 +4,15 @@ import java.util.HashMap;
 
 public class Schedule {
 
+	/**
+	 * Permet de créer un dictionnaire permettant de stocker les activités sous forme d'un couple, date/description
+	 */
 	private HashMap<Activity, Integer> edt = new HashMap<>();
-	
+
+	/**
+	 * Constructeur d'un emplois du temps
+	 * @param edt L'emplois du temps
+	 */
 	public Schedule(HashMap<Activity, Integer> edt) {
 		this.edt = edt;
 	}
@@ -13,11 +20,27 @@ public class Schedule {
 	private Schedule(){
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * Permet de retourner l'emplois du temps
+	 * @return edt (L'emplois du temps
+	 */
+>>>>>>> 100ff3575587b256a8977a81fa0909f75f52943c
 	public HashMap<Activity, Integer> getEdt() {
 		return edt;
 	}
 
+<<<<<<< HEAD
 	public boolean satisfies(final Collection<PrecedenceConstraint> ListOfConstraints) {
+=======
+	/**
+	 * Méthode permet de vérifier si l'emplois du temps vérifie la liste de contraintes
+	 * @param ListOfConstraints Listes des contraintes
+	 * @return Retourne si vrai ou faux si l'emplois du temps satisfait toute les contraintes
+	 */
+	public boolean satisfies(ArrayList<PrecedenceConstraint> ListOfConstraints) {
+>>>>>>> 100ff3575587b256a8977a81fa0909f75f52943c
 		for (PrecedenceConstraint constraint : ListOfConstraints){
 			if(!constraint.isSatisfied(this)){
 					return false;
@@ -27,6 +50,10 @@ public class Schedule {
 		return true;
 	}
 
+	/**
+	 * Méthode qui retourne une liste des activités triées par ordre croissant de l'heure
+	 * @return arl (liste d'activités triées)
+	 */
 	public ArrayList<Activity> getSortedActivities() {
 		ArrayList<Activity> arl = new ArrayList <> ();
 		
@@ -47,7 +74,11 @@ public class Schedule {
 		}
 		return arl;
 	}
-	
+
+	/**
+	 * Retourne une chaîne de caractère bien détaillé pour présenter une activité
+	 * @return res (chaîne de caractère)
+	 */
 	public String toString() {
 		ArrayList<Activity> activities = getSortedActivities();
 		String res="";
@@ -56,8 +87,20 @@ public class Schedule {
 		}
 		return res;
 	}
+<<<<<<< HEAD
 	
 	private Activity next(final Collection<Activity> activities, final Collection<PrecedenceConstraint> constraints, final Collection<Activity> set){
+=======
+
+	/**
+	 * Méthode permettant de retourner une activité qui peut être planifiée en fonction de contrainte et d'une liste d'activités déjà planifiées
+	 * @param activities Activité déjà planifié
+	 * @param constraints Contraintes entre les activités
+	 * @param set Activité passé en paramètre
+	 * @return activity (retourne une activité qui peut être planifiée)
+	 */
+	private Activity next(ArrayList<Activity> activities, ArrayList<PrecedenceConstraint> constraints, Set<Activity> set){
+>>>>>>> 100ff3575587b256a8977a81fa0909f75f52943c
 		for(Activity activity : activities) {
 			if(!set.contains(activity)){
 				boolean isOk = true;
@@ -73,9 +116,21 @@ public class Schedule {
 		}
 		return null;
 	}
+<<<<<<< HEAD
 	
 	public Schedule computeSchedule(final Collection<Activity> activities, final Collection<PrecedenceConstraint> constraints){
 		int hour = 8*60;
+=======
+
+	/**
+	 * Méthode permettant de retourner un emplois du temps comprenant toute les activités et respectant les contraintes
+	 * @param activities Listes d'acitivtés
+	 * @param constraints Contraintes
+	 * @return planning (emplois du temps)
+	 */
+	public Schedule computeSchedule(ArrayList<Activity> activities, ArrayList<PrecedenceConstraint> constraints){
+		int hour = 8;
+>>>>>>> 100ff3575587b256a8977a81fa0909f75f52943c
 		Schedule planning = new Schedule();
 		ArrayList<Activity> tmp = new ArrayList<>(activities); 
 		for(int i = 0; i < activities.size(); i++) {

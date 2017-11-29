@@ -3,6 +3,7 @@ package projet;
 
 import java.lang.Math;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -23,10 +24,8 @@ public class Schedule {
         this.schedule = new HashMap();
     }
 
-    public boolean satisfies(ArrayList<PrecedenceConstraint> listeContrainte) {
-        System.out.println(listeContrainte);
-        for (PrecedenceConstraint constraint : listeContrainte) {
-            System.out.println(constraint.second);
+    public boolean satisfies(Collection<BinaryConstraint> constraints) {
+        for (BinaryConstraint constraint : constraints) {
             Activity before = constraint.first;
             Activity after = constraint.second;
             if (! constraint.isSatisfied(this.schedule.get(before),
@@ -79,12 +78,14 @@ public class Schedule {
         return str;
     }
 
-    private Activity next(ArrayList<Activity> activities, ArrayList<PrecedenceConstraint> constraints, ArrayList<Activity> scheduled) {
+    private Activity next(ArrayList<Activity> activities,
+                          Collection<BinaryConstraint> constraints,
+                          ArrayList<Activity> scheduled) {
         for (Activity activity : activities) {
             if (! scheduled.contains(activity)) {
                 boolean underConstraint = false;
                 label:if(!underConstraint) {
-                    for (PrecedenceConstraint constraint : constraints) {
+                    for (BinaryConstraint constraint : constraints) {
                         underConstraint = (activity==constraint.second);
                         if (underConstraint) {
                             if (! scheduled.contains(constraint.first)) {
@@ -105,7 +106,8 @@ public class Schedule {
 
     }
 
-    public Schedule computeSchedule(ArrayList<Activity> activities, ArrayList<PrecedenceConstraint> constraints) {
+    public Schedule computeSchedule(ArrayList<Activity> activities,
+                                    Collection<BinaryConstraint> constraints) {
         Schedule res = new Schedule();
         ArrayList<Activity> scheduled = new ArrayList<>();
         Activity nextActivity;
@@ -121,3 +123,4 @@ public class Schedule {
     }
 
 }
+
