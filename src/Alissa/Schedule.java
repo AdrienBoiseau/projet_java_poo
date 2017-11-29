@@ -1,8 +1,6 @@
-import java.awt.List;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
 
 public class Schedule {
 
@@ -14,17 +12,16 @@ public class Schedule {
 	
 	private Schedule(){
 	}
-	
+
 	public HashMap<Activity, Integer> getEdt() {
 		return edt;
 	}
 
-	public boolean satisfies(ArrayList<PrecedenceConstraint> ListOfConstraints) {
+	public boolean satisfies(final Collection<PrecedenceConstraint> ListOfConstraints) {
 		for (PrecedenceConstraint constraint : ListOfConstraints){
-			if(this.edt.get(constraint.first) != null && this.edt.get(constraint.second) != null){
-				if (!constraint.isSatisfied(this.edt.get(constraint.first), this.edt.get(constraint.second))){
+			if(!constraint.isSatisfied(this)){
 					return false;
-				}
+				
 			}
 		}
 		return true;
@@ -55,19 +52,18 @@ public class Schedule {
 		ArrayList<Activity> activities = getSortedActivities();
 		String res="";
 		for (Activity act : activities){
-			res += act.description + " à " + this.edt.get(act) + "h durant " + (act.duree) + " minutes \n" ;
+			res += act.description + " à " + this.edt.get(act)/60 + "h" + this.edt.get(act)%60 + " durant " + (act.duree) + " minutes \n" ;
 		}
 		return res;
 	}
 	
-	private Activity next(ArrayList<Activity> activities, ArrayList<PrecedenceConstraint> constraints, Set<Activity> set){
+	private Activity next(final Collection<Activity> activities, final Collection<PrecedenceConstraint> constraints, final Collection<Activity> set){
 		for(Activity activity : activities) {
 			if(!set.contains(activity)){
 				boolean isOk = true;
 				for(PrecedenceConstraint prec : constraints) {
-					if(prec.second.equals(activity) && !set.contains(prec.first)){
+					if(prec.getSecond().equals(activity) && !set.contains(prec.getFirst())){
 						isOk = false;
-						break;
 					}
 				}
 				if(isOk){
@@ -78,16 +74,15 @@ public class Schedule {
 		return null;
 	}
 	
-	public Schedule computeSchedule(ArrayList<Activity> activities, ArrayList<PrecedenceConstraint> constraints){
-		int hour = 8;
+	public Schedule computeSchedule(final Collection<Activity> activities, final Collection<PrecedenceConstraint> constraints){
+		int hour = 8*60;
 		Schedule planning = new Schedule();
-		@SuppressWarnings("unchecked")
-		ArrayList<Activity> tmp = (ArrayList<Activity>) activities.clone();
+		ArrayList<Activity> tmp = new ArrayList<>(activities); 
 		for(int i = 0; i < activities.size(); i++) {
 			Activity act = next(tmp, constraints, planning.edt.keySet());
 			int indexAct = tmp.indexOf(act);			
 			planning.edt.put(act, hour);
-			hour+=act.duree/60;
+			hour+=act.duree;
 			tmp.remove(indexAct);		
 		}
 		return planning;

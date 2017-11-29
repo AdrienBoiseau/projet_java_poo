@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class PrecedenceConstraint extends BinaryConstraint implements Constraint {
 	
 	public PrecedenceConstraint(Activity first, Activity second) {

@@ -15,4 +15,12 @@ public abstract class BinaryConstraint implements Constraint{
 		int date2 = schedule.getEdt().get(this.second);
 		return this.isSatisfied(date1, date2);	
 	}
+
+	public Activity getFirst() {
+		return first;
+	}
+
+	public Activity getSecond() {
+		return second;
+	}
 }

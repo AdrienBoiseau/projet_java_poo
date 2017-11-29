@@ -52,4 +52,24 @@ public class ScheduleReader {
 			}
 			return precedenceConstraints; 
 		}
+		
+		
+		public ArrayList<MeetConstraint> readMeetConstraint(String filename, Map<String, Activity> activities) throws IOException{
+			BufferedReader fileReader = new BufferedReader (new FileReader (filename));
+			ArrayList <MeetConstraint> meetConstraints = new ArrayList<>(); 
+			OrderedPairReader meetConstraintReader = new OrderedPairReader(fileReader, activities.keySet(), "_meets_");
+			String id1 = "";
+			String id2 = "";
+			Activity first;
+			Activity second;
+			
+			for (OrderedPair<String, String> strings: meetConstraintReader.readAll()) {
+			    id1 = strings.getFirst();
+			    id2 = strings.getSecond();
+			    first = activities.get(id1);
+			    second = activities.get(id2);
+			    meetConstraints.add(new MeetConstraint(first, second));
+			}
+			return meetConstraints; 
+		}
 }
